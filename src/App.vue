@@ -1,28 +1,29 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Footer from './components/footer/footer.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Footer
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import './assets/layout/layout.css';
+</style>
+<style>
+  @import './assets/fontawesome/css/all.min.css';
+
+  .vue-monthly-picker .input{
+    width: 200px !important;
+  }
 </style>

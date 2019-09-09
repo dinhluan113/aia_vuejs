@@ -1,0 +1,30 @@
+.footer {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 9px 10px 7px;
+    list-style: none;
+    background-color: #fff;
+}
+
+.footer li {
+    flex: 1;
+}
+
+.footer li i {
+    font-size: 1.5em;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.footer li a {
+    text-transform: uppercase;
+    color: #808080;
+}
+
+.footer li a.router-link-exact-active {
+    color: #039789;
+}
