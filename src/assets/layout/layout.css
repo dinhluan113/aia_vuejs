@@ -5,13 +5,24 @@
     font-size: 14px;
 }
 
+*:focus {
+    outline: none;
+}
+input:-internal-autofill-selected  {
+    background-color: #000 !important;
+}
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+}
 a {
     color: #262f50;
     text-decoration: none;
 }
 
 body {
-    background-color: #68cae4;
+    background-color: #f8f8f8;
+    max-width: 640px;
+    margin: auto;
     /* background-image: url('../img/bgBanner.jpg');
     background-repeat: no-repeat;
     background-size: cover; */
@@ -23,12 +34,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
     margin-bottom: 70px;
 }
 
 .month-picker__year {
     height: 45px;
+    background: #fff;
 }
 
 .month-picker__year p {
