@@ -46,6 +46,7 @@ export default {
             console.log("crrYear: " + res.year);
         },
         testBtn() {
+            let self = this;
             let promise = CommitRepository.ChangeCommitByMonth("123", "12");
             promise
                 .then(function(response) {
@@ -56,9 +57,10 @@ export default {
                     }
                     return response;
                 })
-                .catch(function(e) {
+                .catch(function(error) {
                     alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                    console.log(e);
+                    if (error.response.status === 401)
+                        self.$router.push("/login");
                 })
                 .finally(function() {});
         }
