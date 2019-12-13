@@ -1,27 +1,19 @@
 <template>
     <div id="app">
-        <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-        <router-view></router-view>
-        <Footer :style="{ 'display': this.isShowFooter}" />
+        <component :is="layout">
+            <router-view></router-view>
+        </component>
     </div>
 </template>
 
 <script>
-import Footer from './components/layout/footer.vue'
+const default_layout = "default";
 
 export default {
     name: 'app',
-    components: {
-        Footer
-    },
-    data: function() {
-        return {
-            isShowFooter: 'flex'
-        }
-    },
-    created: function() {
-        if (window.location.href.indexOf('login') > -1) {
-            this.isShowFooter = 'none';
+    computed: {
+        layout(){
+            return (this.$route.meta.layout || default_layout) + '-layout';
         }
     },
 }

@@ -130,7 +130,7 @@ export default {
     text-align: center;
 }
 .mpe_Popup thead{
-    background-color: #0078d7;
+    background-color: #039789;
     color: #fff;
 }
 .mpe_Popup thead .crrYear{
@@ -160,7 +160,7 @@ export default {
     margin: auto;
 }
 .mpe_Popup td.active span{
-    background-color: #428bcf;
+    background-color: #00a596;
     color: #fff;
 }
 

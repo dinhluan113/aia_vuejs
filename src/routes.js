@@ -4,10 +4,10 @@ import Employees from './components/employees/Employees.vue';
 import Login from './components/shared/login.vue'
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/contracts', component: Contracts },
-    { path: '/employees', component: Employees },
-    { path: '/login', component: Login },
+    { path: '/', name: "dashboard", component: Home, meta: { requiresAuth: true } },
+    { path: '/contracts', name: "contracts", component: Contracts, meta: { requiresAuth: true } },
+    { path: '/employees', name: "employees", component: Employees, meta: { requiresAuth: true } },
+    { path: '/login', name: "login", component: Login, meta: { layout: 'no-footer' } },
 ];
 
 export default routes;
