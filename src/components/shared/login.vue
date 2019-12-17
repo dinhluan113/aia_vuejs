@@ -5,11 +5,11 @@
             <div class="mainContainer">
                 <div class="frmGroup">
                     <i class="fa fa-user"></i>
-                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username" v-model="userName" v-on:blur="validateUsername()" />
+                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()"/>
                 </div>
                 <div class="frmGroup">
                     <i class="fa fa-key"></i>
-                    <input ref="password" id="txtPassword" type="password" name="txtPassword" placeholder="Password" v-model="password" v-on:blur="validatePassword()" />
+                    <input ref="password" id="txtPassword" type="password" name="txtPassword" placeholder="Password" v-model="password" v-on:blur="validatePassword()" v-on:keyup.enter="submitLogin()"/>
                 </div>
                 <a href="javascript:void(0)" v-on:click="submitLogin()" class="btnLogin">Login</a>
                 <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
