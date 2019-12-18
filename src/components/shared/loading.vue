@@ -20,7 +20,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,8 +72,8 @@ export default {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 6px solid rgba(0,0,0,0.2);
+  border-color: rgba(0,0,0,0.2) transparent rgba(0,0,0,0.2) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
