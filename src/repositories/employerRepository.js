@@ -12,9 +12,7 @@ export default {
         });
     },
     Add(obj) {
-        return Repository.post(`${resource}`, {
-            dto: obj
-        }, {
+        return Repository.post(`${resource}`, obj, {
             'headers': {
                 Authorization: 'Bearer ' + localStorage.getItem('jwt')
             },

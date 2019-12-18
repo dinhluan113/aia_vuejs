@@ -6,18 +6,19 @@
                 <img src="@/assets/img/employer.png" />    
             </div>    
             <div class="col2">    
-                <input class="emInput" v-model="this.Model.Name" placeholder="add name" required>    
-                <input class="emInput" v-model="this.Model.DateCreated" type="date" required>    
+                <input class="emInput" v-model="objModel.Name" placeholder="add name" required>    
+                <input class="emInput" v-model="objModel.DateCreated" type="date" required>    
             </div>    
         </section>    
+        <p>ABC: {{ this.objModel.Name }}</p>
         <section class="secPlusInfo">    
             <div class="grInput">    
                 <i class="fa fa-phone-alt"></i>    
-                <input class="emInput" v-model="this.Model.Phone" placeholder="Phone">    
+                <input class="emInput" v-model="objModel.Phone" placeholder="Phone">    
             </div>    
             <div class="grInput">    
                 <i class="fa fa-envelope"></i>    
-                <input class="emInput" v-model="this.Model.Email" type="Email" placeholder="Email">    
+                <input class="emInput" v-model="objModel.Email" type="Email" placeholder="Email">    
             </div>    
         </section>    
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
@@ -37,7 +38,7 @@ export default {
     data: function() {
         return {
             isShowLoading: false,
-            Model: {
+            objModel: {
                 Id: 0,
                 Name: "",
                 DateCreated: new Date(),
@@ -50,7 +51,8 @@ export default {
         addEmployer() {
             let self = this;
             this.isShowLoading = true;
-            let promise = EmployerRepository.Add(this.Model);
+            this.objModel.DateCreated = new Date(this.objModel.DateCreated);
+            let promise = EmployerRepository.Add(this.objModel);
             promise
                 .then(function(response) {
                     if (response.data != null)
