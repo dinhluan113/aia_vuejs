@@ -1,5 +1,5 @@
 <template>
-    <div class="employerItem" v-if="this.Model != null">
+    <router-link :to="{ name: 'employeredit', params: { emid: this.Model.id }}" class="employerItem" v-if="this.Model != null">
         <div class="col1">
             <img src="@/assets/img/employer.png" />
         </div>
@@ -10,7 +10,7 @@
         <div class="col3">
             <i class="fa fa-expand"></i>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
@@ -49,6 +49,9 @@ export default {
     margin: 10px 5px;
     border-radius: 4px;
 }
+    .employerItem:first-child{
+        margin-top: 0;
+    }
 
     .employerItem>div {
         display: inline-block;

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import Vuelidate from "vuelidate";
 
 import routes from './routes.js'
 
@@ -39,6 +40,7 @@ router.beforeEach((to, from, next) => {
 })
 
 Vue.use(VueRouter)
+Vue.use(Vuelidate)
 
 new Vue({
     router,

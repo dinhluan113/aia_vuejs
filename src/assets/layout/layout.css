@@ -8,19 +8,20 @@
 *:focus {
     outline: none;
 }
-input:-internal-autofill-selected  {
+
+input:-internal-autofill-selected {
     background-color: #000 !important;
 }
+
+
 /*Change text in autofill textbox*/
-input:-webkit-autofill {
-}
 a {
     color: #262f50;
     text-decoration: none;
 }
 
 body {
-    background-color: #f8f8f8;
+    background-color: #f0eff5;
     max-width: 640px;
     margin: auto;
     /* background-image: url('../img/bgBanner.jpg');

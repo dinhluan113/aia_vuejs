@@ -2,6 +2,7 @@ import Home from './components/HelloWorld.vue';
 import Contracts from './components/contract/Contracts.vue';
 import Employees from './components/employees/Employees.vue';
 import EmployerAdd from './components/employees/Employer_Add.vue';
+import EmployerEdit from './components/employees/Employer_Edit.vue';
 import Login from './components/shared/login.vue'
 
 const routes = [
@@ -9,6 +10,7 @@ const routes = [
     { path: '/contracts', name: "contracts", component: Contracts, meta: { requiresAuth: true } },
     { path: '/employees', name: "employees", component: Employees, meta: { requiresAuth: true } },
     { path: '/employees/add', name: "employeradd", component: EmployerAdd, meta: { requiresAuth: true } },
+    { path: '/employees/edit/:emid', name: "employeredit", component: EmployerEdit, meta: { requiresAuth: true } },
     { path: '/login', name: "login", component: Login, meta: { layout: 'no-footer' } },
 ];
 

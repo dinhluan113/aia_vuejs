@@ -1,31 +1,40 @@
 <template>
     <div class="employer_add">
         <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Add Employer</h1>
-        <section>
-            <div class="col1">    
-                <img src="@/assets/img/employer.png" />    
-            </div>    
-            <div class="col2">    
-                <input class="emInput" v-model="objModel.Name" placeholder="add name" required>    
-                <input class="emInput" v-model="objModel.DateCreated" type="date" required>    
-            </div>    
-        </section>    
-        <p>ABC: {{ this.objModel.Name }}</p>
-        <section class="secPlusInfo">    
-            <div class="grInput">    
-                <i class="fa fa-phone-alt"></i>    
-                <input class="emInput" v-model="objModel.Phone" placeholder="Phone">    
-            </div>    
-            <div class="grInput">    
-                <i class="fa fa-envelope"></i>    
-                <input class="emInput" v-model="objModel.Email" type="Email" placeholder="Email">    
-            </div>    
-        </section>    
-        <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-        <a href="javascript:void(0)" @click="addEmployer()" class="btnAddEmployer"><i class="fa fa-save"></i></a>
+        <form @submit.prevent="handleSubmit">
+            <section>
+                <div class="col1">    
+                    <img src="@/assets/img/employer.png" />    
+                </div>    
+                <div class="col2">    
+                    <input class="emInput" :class="{'txtError': !this.$v.objModel.Name.required}" v-model="objModel.Name" placeholder="add name" required>     
+                    <span v-if="!$v.objModel.Name.required" class="addLblError">Name is required</span>
+                    <span v-if="!$v.objModel.Name.minLength" class="addLblError">Name must have at least {{$v.objModel.Name.$params.minLength.min}} letters.</span>
+                    <input class="emInput" v-model="objModel.DateCreated" type="date" :v="this.objModel.DateCreated">     
+                    <span v-if="!$v.objModel.DateCreated.required" class="addLblError">Date Created is required</span> 
+                </div>    
+            </section>    
+            <section class="secPlusInfo">    
+                <div class="grInput">    
+                    <i class="fa fa-phone-alt"></i>    
+                    <input class="emInput" :class="{'txtError': !this.$v.objModel.Phone.isPhoneNumber}" v-model="objModel.Phone" placeholder="Phone">      
+                    <span v-if="!$v.objModel.Phone.isPhoneNumber" class="addLblError">Phone is invalid</span>
+                </div>    
+                <div class="grInput">    
+                    <i class="fa fa-envelope"></i>    
+                    <input class="emInput" :class="{'txtError': !this.$v.objModel.Email.email}" v-model="objModel.Email" type="Email" placeholder="Email">      
+                    <span v-if="!$v.objModel.Email.email" class="addLblError">Email is invalid</span>
+                </div>    
+            </section>    
+            <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
+            <button class="btnAddEmployer"><i class="fa fa-save"></i></button>
+        </form>
     </div>
 </template>
 <script>
+import { required, email, minLength } from "vuelidate/lib/validators";
+import { validPhone } from "@/helpers/ValidateHelper.js";
+const isPhoneNumber = (value) => validPhone(value)
 import loading from '@/components/shared/loading.vue'
 
 import { RepositoryFactory } from '@/repositories/RepositoryFactory'
@@ -41,22 +50,42 @@ export default {
             objModel: {
                 Id: 0,
                 Name: "",
-                DateCreated: new Date(),
+                DateCreated: (new Date()).getFullYear() + "-" + String((new Date()).getMonth() + 1).padStart(2, '0') + "-" + String((new Date()).getDate()).padStart(2, '0'),
                 Phone: "",
                 Email: "",
             }
         }
     },
+    validations: {
+        objModel: {
+            Email: { email },
+            Name: { required, minLength: minLength(2) },
+            DateCreated: { required },
+            Phone: { isPhoneNumber },
+        }
+    },
     methods: {
-        addEmployer() {
+        handleSubmit(e) {
+            e.preventDefault();
+            
+            this.submitted = true;
+            // stop here if form is invalid
+            this.$v.$touch();
+            console.log(this.$v.$invalid);
+            if (this.$v.$invalid) {
+                console.log("Invalid Form");
+                return;
+            }
             let self = this;
             this.isShowLoading = true;
             this.objModel.DateCreated = new Date(this.objModel.DateCreated);
             let promise = EmployerRepository.Add(this.objModel);
             promise
                 .then(function(response) {
-                    if (response.data != null)
-                        console.log(response);
+                    if (response.data != null){
+                        alert("Employer successfully added");
+                        self.$router.push("/employees");
+                    }
                     return response;
                 })
                 .catch(function(error) {
@@ -68,7 +97,7 @@ export default {
                 .finally(function() {
                     self.isShowLoading = false;
                 })
-        }
+        },
     },
 }
 </script>
@@ -122,6 +151,9 @@ export default {
     background-color: transparent;
     padding: 3px 1px;
 }
+    .employer_add input.emInput.txtError {
+        border-bottom: 1px solid red;
+    }
 
 .employer_add .grInput i {
     display: inline-block;
@@ -133,5 +165,12 @@ export default {
 .employer_add .grInput input.emInput {
     display: inline-block;
     width: 288px;
+}
+
+.employer_add .addLblError{
+    font-size: 0.8em;
+    color: red;
+    display: block;
+    margin: -6px 0 5px;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
     <div>
         <h1 class="titleE">All Employees List</h1>
-        <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
+        <div class="employees_container">
+            <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
+        </div>
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
         <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-user-plus"></i></router-link>
     </div>
@@ -57,6 +59,11 @@ export default {
     padding: 20px 0;
     font-size: 1.5em;
     position: relative;
+}
+.employees_container{
+    display: block;
+    overflow: scroll;
+    height: calc(100vh - 147px);
 }
 .btnAddEmployer{
     box-shadow: 0px 0px 8px rgba(0,0,0,0.5);

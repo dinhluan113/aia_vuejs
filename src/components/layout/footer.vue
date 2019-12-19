@@ -6,15 +6,15 @@
     </li>
     <li>
       <router-link to="/contracts">
-      <i class="fa fa-file-contract"></i>Hợp đồng</router-link>
+      <i class="fa fa-file-contract"></i>Contracts</router-link>
     </li>
     <li>
       <router-link to="/employees">
-      <i class='fa fa-user-friends'></i>Nhân viên</router-link>
+      <i class='fa fa-user-friends'></i>Employees</router-link>
     </li>
     <li>
       <router-link to="/test">
-      <i class='fa fa-fingerprint'></i>Tài khoản</router-link></li>
+      <i class='fa fa-fingerprint'></i>Account</router-link></li>
   </ul>
 </template>
 

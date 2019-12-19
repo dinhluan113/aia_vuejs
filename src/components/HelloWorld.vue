@@ -24,7 +24,7 @@
             </div>
         </div>
         <!-- <HeaderCp title="Home" /> -->
-        <p>Chọn tháng/năm</p>
+        <p>Choose date</p>
         <div class="month-container">
             <MonthPicker @changeMonthInput="changeMonth($event)" />
         </div>
@@ -81,7 +81,6 @@ export default {
     },
     methods: {
         changeMonth(res) {
-            console.log("crrMonth: " + res.month + " -  crrYear: " + res.year);
             this.choosedMonth = res.month;
             this.choosedYear = res.year;
             this.getCommitByMonth();
