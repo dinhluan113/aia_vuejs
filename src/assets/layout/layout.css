@@ -21,12 +21,9 @@ a {
 }
 
 body {
-    background-color: #f0eff5;
+    background-color: #f4f6fa;
     max-width: 640px;
     margin: auto;
-    /* background-image: url('../img/bgBanner.jpg');
-    background-repeat: no-repeat;
-    background-size: cover; */
 }
 
 #app {
@@ -45,4 +42,11 @@ body {
 
 .month-picker__year p {
     padding-top: 14px;
+}
+.titleE {
+    background: rgba(3, 151, 137, 0.9);
+    color: #fff;
+    padding: 20px 0;
+    font-size: 1.5em;
+    position: relative;
 }

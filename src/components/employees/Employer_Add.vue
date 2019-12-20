@@ -103,11 +103,11 @@ export default {
 </script>
 
 <style>
-.titleE {
+.employer_add .titleE {
     margin-bottom: 15px;
 }
 
-.titleE i {
+.employer_add .titleE i {
     position: absolute;
     left: 16px;
     top: 1.1em;
