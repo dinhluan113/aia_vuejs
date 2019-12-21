@@ -290,9 +290,10 @@
             width: 85%;
             padding: 5px 5px;
             background-color: rgba(255, 255, 255, 0.7);
-            border: none;
             margin: 24px auto 19px;
             font-size: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         .popupCommit footer {
