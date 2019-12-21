@@ -6,18 +6,18 @@
                 <table>
                     <tr>
                         <td colspan="2" class="cmBox_Title">
-                            <p class="commitBox_value commitBox_value-Big" @click="openPopupChangeCommit()">{{ this.crrCommit.toLocaleString()+ " ₫" }}</p>
+                            <p class="commitBox_value commitBox_value-Big" @click="openPopupChangeCommit()">{{ this.crrCommit.toLocaleString() + " ₫" }}</p>
                             <p class="commitBox_note">Commit <a href="#" class="iPen" @click="openPopupChangeCommit()"><i class="fa fa-pen"></i></a></p>
                         </td>
                     </tr>
                     <tr class="cmBox_FYPNeed">
                         <td>
                             <p class="commitBox_note">FYP</p>
-                            <p class="commitBox_value">0</p>
+                            <p class="commitBox_value">{{ this.crrFYP.toLocaleString() + " ₫" }}</p>
                         </td>
                         <td>
                             <p class="commitBox_note">Need to do</p>
-                            <p class="commitBox_value">0</p>
+                            <p class="commitBox_value">{{ this.crrRemain.toLocaleString() + " ₫" }}</p>
                         </td>
                     </tr>
                 </table>
@@ -62,6 +62,8 @@
                 choosedMonth: parseInt(String((new Date()).getMonth() + 1).padStart(2, '0')),
                 choosedYear: parseInt(String((new Date()).getFullYear())),
                 crrCommit: 0,
+                crrFYP: 0,
+                crrRemain: 0,
                 currency: "VND",
                 locale: "vi-VN",
                 isShowLoading: false
@@ -92,7 +94,9 @@
                 promise
                     .then(function (response) {
                         if (response.data != null) {
-                            self.crrCommit = parseInt(response.data);
+                            self.crrCommit = parseInt(response.data.crrCommit);
+                            self.crrFYP = parseInt(response.data.fyp);
+                            self.crrRemain = parseInt(response.data.remain);
                         }
                         return response;
                     })
@@ -114,6 +118,7 @@
                     .then(function (response) {
                         if (response.data != null && parseInt(response.data) > 0) {
                             self.crrCommit = commitValue;
+                            self.crrRemain = commitValue - self.crrFYP >= 0 ? parseInt(commitValue - self.crrFYP) : 0;
                         } else
                             alert("Got some undefined errors. Please try again later.");
                         return response;
@@ -211,6 +216,7 @@
             color: #736e6e;
             margin: 4px 0 6px;
         }
+
         .commitBox .commitBox_value {
             font-weight: bold;
             color: #2c3a41;

@@ -117,7 +117,7 @@
             promise
                 .then(function (response) {
                     if (response.data != null) {
-                        response.data.forEach(function (obj) {
+                        response.data.lstEmpl.forEach(function (obj) {
                             self.arrEmployer.push(obj);
                         });
                     }

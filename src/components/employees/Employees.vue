@@ -4,6 +4,7 @@
         <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
         <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-user-plus"></i></router-link>
+        <a href="javascript:void(0)" v-if="iRemainItems > 0" @click="loadmoreEmpl()">Load more</a>
     </div>
 </template>
 <script>
@@ -12,7 +13,7 @@
 
     import { RepositoryFactory } from '@/repositories/RepositoryFactory'
     const EmployerRepository = RepositoryFactory.get('employer')
-
+    const pageSize = 5;
     export default {
         components: {
             emItem,
@@ -21,31 +22,43 @@
         data: function () {
             return {
                 arrEmployer: [],
-                isShowLoading: false
+                isShowLoading: false,
+                iRemainItems: 0,
+                pageIndex: 0
             }
         },
         created: function () {
-            let self = this;
-            this.isShowLoading = true;
-            let promise = EmployerRepository.GetAll(10, 0);
-            promise
-                .then(function (response) {
-                    if (response.data != null) {
-                        response.data.forEach(function (obj) {
-                            self.arrEmployer.push(obj);
-                        });
-                    }
-                    return response;
-                })
-                .catch(function (error) {
-                    alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                    console.log(error);
-                    if (error.response.status === 401)
-                        self.$router.push("/login");
-                })
-                .finally(function () {
-                    self.isShowLoading = false;
-                })
+            this.getListEmployer();
+        },
+        methods: {
+            getListEmployer() {
+                let self = this;
+                this.isShowLoading = true;
+                let promise = EmployerRepository.GetAll(pageSize, this.pageIndex);
+                promise
+                    .then(function (response) {
+                        if (response.data != null) {
+                            response.data.lstEmpl.forEach(function (obj) {
+                                self.arrEmployer.push(obj);
+                            });
+                            self.iRemainItems = response.data.remain;
+                        }
+                        return response;
+                    })
+                    .catch(function (error) {
+                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
+                        console.log(error);
+                        if (error.response.status === 401)
+                            self.$router.push("/login");
+                    })
+                    .finally(function () {
+                        self.isShowLoading = false;
+                    })
+            },
+            loadmoreEmpl() {
+                this.pageIndex += 1;
+                this.getListEmployer();
+            }
         }
     }
 </script>

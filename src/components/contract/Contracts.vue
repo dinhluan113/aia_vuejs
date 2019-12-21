@@ -42,38 +42,32 @@
             promise
                 .then(function (response) {
                     if (response.data != null) {
-                        response.data.forEach(function (obj) {
+                        response.data.lstEmpl.forEach(function (obj) {
                             self.arrEmployer.push(obj);
                         });
                     }
                     return response;
                 })
                 // Lấy danh sách Hợp đồng
-                .then(this.getAllContracts(10, 0))
+                .then(function () {
+                    ContractRepository.GetAll(10, 0).then(function (rs2) {
+                        if (rs2.data != null) {
+                            rs2.data.forEach(function (obj) {
+                                self.arrContracts.push(obj);
+                            });
+                        }
+                        return rs2;
+                    });
+                })
                 .catch(function (error) {
                     alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
                     console.log(error);
-                    if (error.response.status === 401)
-                        self.$router.push("/login");
                 })
                 .finally(function () {
                     self.isShowLoading = false;
                 });
         },
         methods: {
-            getAllContracts(pageSize, pageIndex) {
-                let self = this;
-                let promiseContract = ContractRepository.GetAll(pageSize, pageIndex);
-                promiseContract
-                    .then(function (response) {
-                        if (response.data != null) {
-                            response.data.forEach(function (obj) {
-                                self.arrContracts.push(obj);
-                            });
-                        }
-                        return response;
-                    })
-            }
         }
     };
 </script>
