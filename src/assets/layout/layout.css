@@ -44,7 +44,11 @@ body {
     padding-top: 14px;
 }
 .titleE {
-    background: rgba(3, 151, 137, 0.9);
+    background: rgba(3,151,137,1);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,151,137,1)), color-stop(100%, rgba(0,163,144,1)));
+    background: -webkit-gradient(linear, left top, right top, from(rgba(3,151,137,1)), to(rgba(0,163,144,1)));
+    background: linear-gradient(to right, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#039789', endColorstr='#00a390', GradientType=1 );
     color: #fff;
     padding: 20px 0;
     font-size: 1.5em;
