@@ -1,8 +1,9 @@
 import axios from "axios";
 
-// You can use your own logic to set your local or production domain
-const baseDomain = "http://api.aia.com:56272";
-// The base URL is empty this time due we are using the jsonplaceholder API
+const config = require('../../config.json');
+const defaultConfig = config.ConnectionApi;
+const baseDomain = defaultConfig;//"http://api.aia.com:56272";
+
 const baseURL = `${baseDomain}`;
 
 export default axios.create({

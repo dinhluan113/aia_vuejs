@@ -1,243 +1,270 @@
 <template>
-    <div class="employer_edit">
-        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Edit Employer</h1>
+    <div class="contract_edit">
+        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Edit Contract</h1>
         <form @submit.prevent="handleSubmit">
-            <section>
-                <div class="col1">
-                    <img src="@/assets/img/employer.png" />
-                </div>
-                <div class="col2">
-                    <input class="emInput" :class="{'txtError': !this.$v.objModel.name.required}" v-model="objModel.name" placeholder="add name" required>
-                    <span v-if="!$v.objModel.name.required" class="addLblError">Name is required</span>
-                    <span v-if="!$v.objModel.name.minLength" class="addLblError">Name must have at least {{$v.objModel.name.$params.minLength.min}} letters.</span>
-                    <input class="emInput" v-model="objModel.dateCreated" type="date" :v="this.objModel.dateCreated">
-                    <span v-if="!$v.objModel.dateCreated.required" class="addLblError">Date Created is required</span>
-                </div>
-            </section>
             <section class="secPlusInfo">
                 <div class="grInput">
-                    <i class="fa fa-phone-alt"></i>
-                    <input class="emInput" :class="{'txtError': !this.$v.objModel.phone.isPhoneNumber}" v-model="objModel.phone" placeholder="Phone">
-                    <span v-if="!$v.objModel.phone.isPhoneNumber" class="addLblError">Phone is invalid</span>
+                    <label>NFYP</label>
+                    <i class="fa fa-money-check-alt"></i>
+                    <currency-input class="emInput" :value="objModel.nfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.nfyp" required />
                 </div>
                 <div class="grInput">
-                    <i class="fa fa-envelope"></i>
-                    <input class="emInput" :class="{'txtError': !this.$v.objModel.email.email}" v-model="objModel.email" type="Email" placeholder="Email">
-                    <span v-if="!$v.objModel.email.email" class="addLblError">Email is invalid</span>
+                    <label>RFYP</label>
+                    <i class="fa fa-money-check"></i>
+                    <currency-input class="emInput" :value="objModel.rfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.rfyp" required />
+                </div>
+                <div class="grInput">
+                    <label>Phí trượt</label>
+                    <i class="fa fa-money-bill"></i>
+                    <currency-input class="emInput" :value="objModel.phiTruot" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.phiTruot" required />
+                </div>
+                <div class="grInput">
+                    <label>Customer's Name</label>
+                    <i class="fa fa-user-edit"></i>
+                    <input class="emInput" v-model="objModel.customer_Name" required>
+                </div>
+                <div class="grInput">
+                    <label>Customer's Phone</label>
+                    <i class="fa fa-phone-alt"></i>
+                    <input class="emInput" v-model="objModel.customer_Phone" type="number" maxlength="11" min="10" required>
+                </div>
+                <div class="grInput">
+                    <label>Date</label>
+                    <i class="fa fa-calendar-alt"></i>
+                    <input class="emInput" v-model="objModel.dateCreated" type="date" required>
+                </div>
+                <div class="grInput">
+                    <label>Employer</label>
+                    <select class="cta_sl" v-model="choosedEmployerId" required>
+                        <option value="0">
+                            -- Choose a Employer --
+                        </option>
+                        <option v-for="item in this.arrEmployer" v-bind:key="item.id" v-bind:value="item.id" required>
+                            {{ item.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="grInput">
+                    <label>Contract's type</label>
+                    <select class="cta_sl" v-model="choosedTypeId" required>
+                        <option value="0">
+                            -- Choose contract type --
+                        </option>
+                        <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
+                    </select>
                 </div>
             </section>
-
-            <div class="btnDelete" @click="deleteEmployer()"><i class="fa fa-trash" style="margin-right: 10px;"></i> Delete</div>    
-            <deleteObject @deleteObject="evDeleteObject($event)" :isShowing.sync="this.isShowPopupDelete" title="Are you sure you want to continue? All infomations, contracts of this Employer will be deleted." />
-
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-            <button class="btnAddEmployer"><i class="fa fa-save"></i></button>
+            <button class="btnAddContract"><i class="fa fa-save"></i></button>
         </form>
     </div>
 </template>
 <script>
-import { required, email, minLength } from "vuelidate/lib/validators";
-import { validPhone } from "@/helpers/ValidateHelper.js";
-const isPhoneNumber = (value) => validPhone(value)
-import loading from '@/components/shared/loading.vue'
+    import loading from '@/components/shared/loading.vue'
 
-import deleteObject from '@/components/shared/popupDelete.vue'
+    import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+    const EmployerRepository = RepositoryFactory.get('employer')
+    const ContractRepository = RepositoryFactory.get('contract')
 
-import { RepositoryFactory } from '@/repositories/RepositoryFactory'
-const EmployerRepository = RepositoryFactory.get('employer')
+    import { CurrencyInput, parseCurrency } from 'vue-currency-input'
 
-export default {
-    components: {
-        loading,
-        deleteObject
-    },
-    data: function() {
-        return {
-            isShowLoading: false,
-            objModel: {
-                id: 0,
-                name: "",
-                dateCreated: new Date(),
-                phone: "",
-                email: "",
-            },
-            isShowPopupDelete: false
-        }
-    },
-    mounted: function() {
-        let self = this;
-        this.isShowLoading = true;
-        let promise = EmployerRepository.GetById(this.$route.params.emid);
-        promise
-            .then(function(response) {
-                if (response.data != null) {
-                    self.objModel = JSON.parse(JSON.stringify(response.data));
-                    self.objModel.dateCreated = response.data.dateCreated.substring(0,10);
-                }
-                return response;
-            })
-            .catch(function(error) {
-                alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                console.log(error);
-            })
-            .finally(function() {
-                self.isShowLoading = false;
-            })
-    },
-    validations: {
-        objModel: {
-            email: { email },
-            name: { required, minLength: minLength(2) },
-            dateCreated: { required },
-            phone: { isPhoneNumber },
-        }
-    },
-    methods: {
-        handleSubmit(e) {
-            e.preventDefault();
-            this.submitted = true;
-            this.$v.$touch();
-            if (this.$v.$invalid) {
-                console.log("Invalid Form");
-                return;
+    export default {
+        components: {
+            loading,
+            CurrencyInput,
+        },
+        data: function () {
+            return {
+                isShowLoading: false,
+                arrEmployer: [],
+                arrContracts: [],
+                objModel: {
+                    id: 0,
+                    nfyp: 0,
+                    rfyp: 0,
+                    employerId: 0,
+                    typeId: 0,
+                    phiTruot: 0,
+                    customer_Name: '',
+                    customer_Phone: '',
+                    dateCreated: (new Date()).getFullYear() + "-" + String((new Date()).getMonth() + 1).padStart(2, '0') + "-" + String((new Date()).getDate()).padStart(2, '0'),
+                    contractType: 0
+                },
+                currency: "VND",
+                locale: "vi-VN",
+                choosedEmployerId: 0,
+                choosedTypeId: 0,
+                contractType: [
+                    { text: 'Month', value: 1 },
+                    { text: 'Year', value: 2 }
+                ]
             }
+        },
+        computed: {
+            distractionFree() {
+                return {
+                    hideNegligibleDecimalDigits: true,
+                    hideCurrencySymbol: true,
+                    hideGroupingSymbol: false
+                }
+            }
+        },
+        mounted() {
             let self = this;
             this.isShowLoading = true;
-            // this.objModel.DateCreated = new Date(this.objModel.DateCreated);
-            let promise = EmployerRepository.Update(this.objModel);
+            let promise = EmployerRepository.GetAll(10, 0);
             promise
-                .then(function(response) {
+                .then(function (response) {
                     if (response.data != null) {
-                        alert("Employer successfully saved");
+                        response.data.lstEmpl.forEach(function (obj) {
+                            self.arrEmployer.push(obj);
+                        });
                     }
                     return response;
                 })
-                .catch(function(error) {
+                .then(function () {
+                    ContractRepository.GetById(self.$route.params.id).then(function (rs2) {
+                        if (rs2.data != null) {
+                            self.objModel = JSON.parse(JSON.stringify(rs2.data));
+                            self.objModel.dateCreated = rs2.data.dateCreated.substring(0, 10);
+                            self.choosedEmployerId = self.objModel.employerId;
+                            self.choosedTypeId = self.objModel.typeId;
+                        }
+                        return rs2;
+                    });
+                })
+                .catch(function (error) {
                     alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
                     console.log(error);
-                    if (error.response.status === 401)
-                        self.$router.push("/login");
                 })
-                .finally(function() {
+                .finally(function () {
                     self.isShowLoading = false;
-                })
+                });
         },
-        deleteEmployer(){
-            this.isShowPopupDelete = true;
-        },
-        evDeleteObject(res){
-            let self = this;
-            if(res) {
+        methods: {
+            handleSubmit(e) {
+                e.preventDefault();
+
+                let self = this;
                 this.isShowLoading = true;
-                let promise = EmployerRepository.Delete(this.objModel.id);
+                this.objModel.dateCreated = new Date(this.objModel.dateCreated);
+
+                this.objModel.nfyp = parseCurrency(document.getElementById("objModel.nfyp").value, { locale: this.locale, currency: this.currency });
+                this.objModel.rfyp = parseCurrency(document.getElementById("objModel.rfyp").value, { locale: this.locale, currency: this.currency });
+                this.objModel.phiTruot = parseCurrency(document.getElementById("objModel.phiTruot").value, { locale: this.locale, currency: this.currency });
+                this.objModel.employerId = this.choosedEmployerId;
+                this.objModel.typeId = this.choosedTypeId;
+
+                let promise = ContractRepository.Update(this.objModel);
                 promise
-                    .then(function(response) {
+                    .then(function (response) {
                         if (response.data != null) {
-                            self.$router.push("/employees");
+                            alert("Employer successfully saved");
+                            self.$router.go(-1);
                         }
                         return response;
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
                         console.log(error);
                         if (error.response.status === 401)
                             self.$router.push("/login");
                     })
-                    .finally(function() {
+                    .finally(function () {
                         self.isShowLoading = false;
                     })
             }
-            this.isShowPopupDelete = false;
-
-        }
-    },
-}
+        },
+    }
 </script>
 
 <style>
-.titleE {
-    margin-bottom: 15px;
-}
+    .contract_edit {
+        position: relative;
+        max-height: calc(100vh - 63px);
+        overflow: scroll;
+    }
 
-.titleE i {
-    position: absolute;
-    left: 16px;
-    top: 1.1em;
-    font-size: 1em;
-}
+        .contract_edit .titleE {
+            position: sticky;
+            top: 0;
+        }
 
-.employer_edit section {
-    padding: 10px 0;
-}
+            .contract_edit .titleE i {
+                position: absolute;
+                left: 16px;
+                top: 1.1em;
+                font-size: 1em;
+            }
 
-.employer_edit section.secPlusInfo {
-    width: 320px;
-    margin: auto;
-    padding-bottom: 70px;
-}
+        .contract_edit section:first-child {
+            padding-top: 0;
+        }
 
-.employer_edit section>div {
-    display: inline-block;
-}
+        .contract_edit section {
+            padding: 10px 0;
+        }
 
-.employer_edit section>div.col1 {
-    width: 100px;
-}
+            .contract_edit section.secPlusInfo {
+                width: 320px;
+                margin: auto;
+            }
 
-.employer_edit section>div.col1 img {
-    max-width: 70%;
-    border-radius: 50%;
-    vertical-align: top;
-}
+            .contract_edit section > div {
+                display: inline-block;
+            }
 
-.employer_edit section>div.col2 {
-    width: 220px;
-    text-align: left;
-    vertical-align: top;
-}
+                .contract_edit section > div.col2 {
+                    width: 220px;
+                    text-align: left;
+                    vertical-align: top;
+                }
 
-.employer_edit input.emInput {
-    width: 100%;
-    margin-bottom: 10px;
-    border: none;
-    border-bottom: 1px solid #008578;
-    background-color: transparent;
-    padding: 3px 1px;
-}
+        .contract_edit input.emInput {
+            width: 100%;
+            margin-bottom: 10px;
+            border: none;
+            border-bottom: 1px solid #008578;
+            background-color: transparent;
+            padding: 3px 1px;
+        }
 
-.employer_edit input.emInput.txtError {
-    border-bottom: 1px solid red;
-}
+            .contract_edit input.emInput.txtError {
+                border-bottom: 1px solid red;
+            }
 
-.employer_edit .grInput i {
-    display: inline-block;
-    width: 30px;
-    vertical-align: sub;
-    color: #039789;
-}
+        .contract_edit .grInput label {
+            display: block;
+            text-align: left;
+            margin-left: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-.employer_edit .grInput input.emInput {
-    display: inline-block;
-    width: 288px;
-}
+        .contract_edit .grInput i {
+            display: inline-block;
+            width: 30px;
+            vertical-align: sub;
+            color: #039789;
+        }
 
-.employer_edit .addLblError {
-    font-size: 0.8em;
-    color: red;
-    display: block;
-    margin: -6px 0 5px;
-}
-.employer_edit .btnDelete {
-    display: block;
-    background-color: #fff;
-    padding: 10px 20px;
-    margin: 10px;
-    margin-top: 50px;
-    width: 280px;
-    margin: auto;
-    border-radius: 4px;
-    text-align: left;
-    color: red;
-    border: 1px solid #ffa9ba;
-}
+        .contract_edit .grInput input.emInput {
+            display: inline-block;
+            width: 288px;
+        }
+
+        .contract_edit .addLblError {
+            font-size: 0.8em;
+            color: red;
+            display: block;
+            margin: -6px 0 5px;
+        }
+
+        .contract_edit .cta_sl {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 30px;
+            width: 320px;
+            margin-top: 7px;
+        }
 </style>

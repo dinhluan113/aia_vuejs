@@ -1,18 +1,26 @@
-<template>
-    <router-link :to="{ name: 'employeredit', params: { emid: this.Model.id }}" class="contractItem" v-if="this.Model != null">
+﻿<template>
+    <router-link :to="{ name: 'contractsedit', params: { id: this.Model.id }}" class="contractItem" v-if="this.Model != null">
         <div class="cta_row1">
             <i class="fa fa-id-card" />
-            <p class="pName">ABC XYZ {{ Model.Customer_Name }}</p>
+            <p class="pName">{{ Model.customer_Name }}</p>
         </div>
         <div class="cta_row2">
-            <div class="cta_col1">
+            <div class="cta_col1" style="min-width: 76px">
                 <p class="cta_sub">Created at</p>
                 <p class="cta_vl">{{ this.dateFormated }}</p>
             </div>
-            <div class="cta_col2">
+            <div class="cta_col2" style="min-width: 125px">
                 <p class="cta_sub">Owner</p>
                 <p class="cta_vl">{{ this.Model.userName }}</p>
             </div>
+            <div class="cta_col2">
+                <p class="cta_sub">NFYP</p>
+                <p class="cta_vl">{{ parseInt(this.Model.nfyp).toLocaleString() + " ₫" }}</p>
+            </div>
+            <!--<div class="cta_col2">
+                <p class="cta_sub">RFYP</p>
+                <p class="cta_vl">{{ parseInt(this.Model.rfyp).toLocaleString() + " ₫" }}</p>
+            </div>-->
         </div>
     </router-link>
 </template>
@@ -71,6 +79,9 @@
 
         .contractItem > div.cta_row2 {
             padding: 10px 0 5px;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
 
             .contractItem > div.cta_row2 > div {
@@ -85,7 +96,7 @@
 
             .contractItem > div.cta_row2 .cta_vl {
                 color: #151e3b;
-                font-size: 0.9em;
+                font-size: 0.8em;
                 margin-top: 5px;
             }
 </style>

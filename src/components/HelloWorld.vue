@@ -6,18 +6,18 @@
                 <table>
                     <tr>
                         <td colspan="2" class="cmBox_Title">
-                            <p class="commitBox_value commitBox_value-Big" @click="openPopupChangeCommit()">{{ this.crrCommit.toLocaleString()+ " ₫" }}</p>
+                            <p class="commitBox_value commitBox_value-Big" @click="openPopupChangeCommit()">{{ this.crrCommit.toLocaleString() + " ₫" }}</p>
                             <p class="commitBox_note">Commit <a href="#" class="iPen" @click="openPopupChangeCommit()"><i class="fa fa-pen"></i></a></p>
                         </td>
                     </tr>
                     <tr class="cmBox_FYPNeed">
                         <td>
                             <p class="commitBox_note">FYP</p>
-                            <p class="commitBox_value">0</p>
+                            <p class="commitBox_value">{{ this.crrFYP.toLocaleString() + " ₫" }}</p>
                         </td>
                         <td>
                             <p class="commitBox_note">Need to do</p>
-                            <p class="commitBox_value">0</p>
+                            <p class="commitBox_value">{{ this.crrRemain.toLocaleString() + " ₫" }}</p>
                         </td>
                     </tr>
                 </table>
@@ -62,6 +62,8 @@
                 choosedMonth: parseInt(String((new Date()).getMonth() + 1).padStart(2, '0')),
                 choosedYear: parseInt(String((new Date()).getFullYear())),
                 crrCommit: 0,
+                crrFYP: 0,
+                crrRemain: 0,
                 currency: "VND",
                 locale: "vi-VN",
                 isShowLoading: false
@@ -92,7 +94,9 @@
                 promise
                     .then(function (response) {
                         if (response.data != null) {
-                            self.crrCommit = parseInt(response.data);
+                            self.crrCommit = parseInt(response.data.crrCommit);
+                            self.crrFYP = parseInt(response.data.fyp);
+                            self.crrRemain = parseInt(response.data.remain);
                         }
                         return response;
                     })
@@ -114,6 +118,7 @@
                     .then(function (response) {
                         if (response.data != null && parseInt(response.data) > 0) {
                             self.crrCommit = commitValue;
+                            self.crrRemain = commitValue - self.crrFYP >= 0 ? parseInt(commitValue - self.crrFYP) : 0;
                         } else
                             alert("Got some undefined errors. Please try again later.");
                         return response;
@@ -169,9 +174,17 @@
         padding: 15px;
         padding-top: 35px;
         /*background-color: #039789;*/
+        background: rgba(3,151,137,1);
+        background: -moz-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,151,137,1)), color-stop(100%, rgba(0,163,144,1)));
+        background: -webkit-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+        background: -o-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+        background: -ms-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+        background: linear-gradient(to right, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#039789', endColorstr='#00a390', GradientType=1 );
         text-align: center;
         color: #2a3b43;
-        /*box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);*/
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
         margin-bottom: 20px;
         text-align: center;
     }
@@ -199,6 +212,7 @@
         .commitBox h3 {
             text-transform: uppercase;
             margin-bottom: 20px;
+            color: #fffaed;
         }
 
         .commitBox table {
@@ -208,12 +222,13 @@
 
         .commitBox .commitBox_note {
             font-size: 1em;
-            color: #736e6e;
+            color: #b9b9b9;
             margin: 4px 0 6px;
         }
+
         .commitBox .commitBox_value {
             font-weight: bold;
-            color: #2c3a41;
+            color: #fff;
         }
 
         .commitBox .commitBox_value-Big {
@@ -222,7 +237,7 @@
         }
 
         .commitBox .iPen {
-            /*color: #e0f8be;*/
+            color: #b9b9b9;
             display: inline-block;
             /*border-bottom: 1px solid #fff;*/
             margin-left: 10px;
@@ -284,9 +299,10 @@
             width: 85%;
             padding: 5px 5px;
             background-color: rgba(255, 255, 255, 0.7);
-            border: none;
             margin: 24px auto 19px;
             font-size: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         .popupCommit footer {

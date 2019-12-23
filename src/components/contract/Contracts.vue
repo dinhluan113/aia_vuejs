@@ -1,14 +1,17 @@
 <template>
     <div id="contracts">
         <h1 class="cta_Title">Manager your team member's contracts</h1>
-        <select class="cta_sl">
-            <option value="0">
-                All
-            </option>
-            <option v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item">
-                {{ item.name }}
-            </option>
-        </select>
+        <div class="cta_SearchGrp">
+            <select class="cta_sl" @change="onChangeEmployer($event)">
+                <option value="0">
+                    All
+                </option>
+                <option v-for="item in this.arrEmployer" v-bind:key="item.id" :value="item.id">
+                    {{ item.name }}
+                </option>
+            </select>
+            <MonthPicker @changeMonthInput="changeMonth($event)" />
+        </div>
 
         <contractItem v-for="item in this.arrContracts" v-bind:key="item.id" :Model="item" />
 
@@ -19,6 +22,7 @@
 <script>
     import loading from '@/components/shared/loading.vue'
     import contractItem from './Contracts_item.vue'
+    import MonthPicker from '@/components/month-picker-ez/month-picker-ez.vue'
 
     import { RepositoryFactory } from '@/repositories/RepositoryFactory'
     const EmployerRepository = RepositoryFactory.get('employer')
@@ -26,7 +30,8 @@
     export default {
         components: {
             loading,
-            contractItem
+            contractItem,
+            MonthPicker,
         },
         data: function () {
             return {
@@ -35,44 +40,50 @@
                 isShowLoading: false,
             }
         },
-        created() {
+        mounted() {
             let self = this;
             this.isShowLoading = true;
             let promise = EmployerRepository.GetAll(10, 0);
             promise
                 .then(function (response) {
                     if (response.data != null) {
-                        response.data.forEach(function (obj) {
+                        response.data.lstEmpl.forEach(function (obj) {
                             self.arrEmployer.push(obj);
                         });
                     }
                     return response;
                 })
                 // Lấy danh sách Hợp đồng
-                .then(this.getAllContracts(10, 0))
+                .then(function () {
+                    ContractRepository.GetAll(10, 0).then(function (rs2) {
+                        if (rs2.data != null) {
+                            rs2.data.forEach(function (obj) {
+                                self.arrContracts.push(obj);
+                            });
+                        }
+                        return rs2;
+                    });
+                })
                 .catch(function (error) {
                     alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
                     console.log(error);
-                    if (error.response.status === 401)
-                        self.$router.push("/login");
                 })
                 .finally(function () {
                     self.isShowLoading = false;
                 });
         },
         methods: {
-            getAllContracts(pageSize, pageIndex) {
+            onChangeEmployer(event) {
                 let self = this;
-                let promiseContract = ContractRepository.GetAll(pageSize, pageIndex);
-                promiseContract
-                    .then(function (response) {
-                        if (response.data != null) {
-                            response.data.forEach(function (obj) {
-                                self.arrContracts.push(obj);
-                            });
-                        }
-                        return response;
-                    })
+                ContractRepository.GetAll(10, 0, event.target.value).then(function (rs2) {
+                    self.arrContracts = [];
+                    if (rs2.data != null) {
+                        rs2.data.forEach(function (obj) {
+                            self.arrContracts.push(obj);
+                        });
+                    }
+                    return rs2;
+                });
             }
         }
     };
@@ -85,12 +96,32 @@
         text-align: center;
     }
 
-    #contracts .cta_sl {
-        border: 1px solid #ccc;
-        padding: 5px 10px;
-        border-radius: 30px;
-        width: 200px;
+    #contracts .cta_SearchGrp {
+        display: flex;
+        width: 320px;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
     }
+
+        #contracts .cta_SearchGrp .cta_sl {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 30px;
+            display: inline-block;
+            width: 150px;
+            margin-right: 5px;
+        }
+
+        #contracts .cta_SearchGrp .mpe_monthPickerContainer {
+            display: inline-block;
+            width: 150px;
+            margin-left: 5px;
+        }
+
+        #contracts .cta_SearchGrp .mpe_crrChooseMonth input {
+            width: 93px;
+        }
 
     .btnAddContract {
         box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
