@@ -95,7 +95,7 @@
                             self.arrContracts.push(obj);
                         });
                         self.remainItems = rs2.data.remain;
-                        self.txtTotal = rs2.data.lst.length + "/" + (rs2.data.lst.length + rs2.data.remain)
+                        self.txtTotal = self.arrContracts.length + "/" + (self.arrContracts.length + rs2.data.remain)
                     }
                     return rs2;
                 })
