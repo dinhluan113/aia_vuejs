@@ -149,8 +149,20 @@
                 promise
                     .then(function (response) {
                         if (response.data != null) {
-                            alert("Employer successfully added");
-                            self.$router.go(-1);
+                            self.$modal.show('dialog', {
+                                title: '',
+                                text: 'Contract successfully added!',
+                                buttons: [
+                                    {
+                                        title: 'Close',
+                                        default: true,
+                                        handler: () => { 
+                                            self.$router.go(-1);
+                                            self.$modal.hide('dialog');
+                                        }
+                                    }
+                                ]
+                            });
                         }
                         return response;
                     })

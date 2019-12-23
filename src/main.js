@@ -8,6 +8,9 @@ import routes from './routes.js'
 import Default from './components/layout/layout-default.vue'
 import NoFooter from './components/layout/layout-nofooter.vue'
 
+import VModal from 'vue-js-modal'
+
+
 Vue.component('default-layout', Default)
 Vue.component('no-footer-layout', NoFooter)
 
@@ -41,6 +44,7 @@ router.beforeEach((to, from, next) => {
 
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
+Vue.use(VModal, { dialog: true })
 
 new Vue({
     router,

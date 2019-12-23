@@ -93,10 +93,15 @@
                 let promise = CommitRepository.GetCommitByMonth(this.choosedMonth, this.choosedYear);
                 promise
                     .then(function (response) {
-                        if (response.data != null) {
+                        if (response.data != null && response.data != "") {
                             self.crrCommit = parseInt(response.data.crrCommit);
                             self.crrFYP = parseInt(response.data.fyp);
                             self.crrRemain = parseInt(response.data.remain);
+                        }
+                        else {
+                            self.crrCommit = 0;
+                            self.crrFYP = 0;
+                            self.crrRemain = 0;
                         }
                         return response;
                     })

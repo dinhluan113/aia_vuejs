@@ -82,9 +82,21 @@ export default {
             let promise = EmployerRepository.Add(this.objModel);
             promise
                 .then(function(response) {
-                    if (response.data != null){
-                        alert("Employer successfully added");
-                        self.$router.push("/employees");
+                    if (response.data != null) {
+                        self.$modal.show('dialog', {
+                                title: '',
+                                text: 'Employer successfully added!',
+                                buttons: [
+                                    {
+                                        title: 'Close',
+                                        default: true,
+                                        handler: () => { 
+                                            self.$router.go(-1);
+                                            self.$modal.hide('dialog');
+                                        }
+                                    }
+                                ]
+                            });
                     }
                     return response;
                 })
