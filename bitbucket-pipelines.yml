@@ -13,6 +13,7 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - npm install
           - npm test
+          - npm run build
           
     - step:
         name: Deploy to production
@@ -24,4 +25,5 @@ pipelines:
                 PASSWORD: 'Matkhau123!'
                 SERVER: '112.78.2.212'
                 REMOTE_PATH: '/aia.luandinh.com/'
+                LOCAL_PATH: '/dist'
 
