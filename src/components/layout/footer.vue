@@ -13,7 +13,7 @@
       <i class='fa fa-user-friends'></i>Employees</router-link>
     </li>
     <li>
-      <router-link to="/test">
+      <router-link to="/profile">
       <i class='fa fa-fingerprint'></i>Account</router-link></li>
   </ul>
 </template>

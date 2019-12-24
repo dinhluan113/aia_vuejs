@@ -22,7 +22,7 @@
             <a href="javasciprt:void(0)" @click="loadmore()" v-if="remainItems > 0" class="btnLoadmore">Load more {{ this.remainItems }} contracts</a>
         </div>
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-        <router-link to="/contracts/add" class="btnAddContract"><i class="fa fa-user-plus"></i></router-link>
+        <router-link to="/contracts/add" class="btnAddContract"><i class="fa fa-plus"></i></router-link>
     </div>
 </template>
 <script>
@@ -121,6 +121,8 @@
     #contracts .cta_container {
         position: relative;
         height: calc(100vh - 62px);
+        height: -webkit-calc(100vh - 62px);
+        height: -moz-calc(100vh - 62px);
         overflow-y: scroll;
     }
 
@@ -137,7 +139,7 @@
         padding: 5px 0;
     }
 
-    #contracts .pTotal{
+    #contracts .pTotal {
         text-align: left;
         padding: 5px 0 0px 10px;
     }
@@ -208,7 +210,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #4aa1c0;
+        background: #039789;
+        border: none;
     }
 
         .btnAddContract i {

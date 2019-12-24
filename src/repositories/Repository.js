@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const config = require('../../config.json');
-const defaultConfig = config.ConnectionApi;
+const defaultConfig = process.env.VUE_APP_API;
 const baseDomain = defaultConfig;
 
 const baseURL = `${baseDomain}`;

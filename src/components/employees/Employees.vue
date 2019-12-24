@@ -3,7 +3,7 @@
         <h1 class="titleE">All Employees List</h1>
         <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-        <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-user-plus"></i></router-link>
+        <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-plus"></i></router-link>
         <a href="javascript:void(0)" v-if="iRemainItems > 0" @click="loadmoreEmpl()">Load more</a>
     </div>
 </template>
@@ -98,7 +98,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #4aa1c0;
+        background: #039789;
+        border: none;
     }
 
         .btnAddEmployer i {
