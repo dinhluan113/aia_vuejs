@@ -26,5 +26,5 @@ pipelines:
                 PASSWORD: 'Matkhau123!'
                 SERVER: 112.78.2.212
                 REMOTE_PATH: /aia.luandinh.com/dist
-                LOCAL_PATH: /dist,
+                LOCAL_PATH: ${BITBUCKET_CLONE_DIR}/dist,
 
