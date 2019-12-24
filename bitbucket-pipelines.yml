@@ -8,12 +8,19 @@ image: node:10.15.3
 pipelines:
   default:
     - step:
+        name: Build
         caches:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - npm test
           - npm run build
+          - echo "$(ls -la dist/)" 
+          - ls
+        artifacts: # defining the artifacts to be passed to each future step.
+          - dist/**
+    - step:
+        script:
+          - ls
           
     - step:
         name: Deploy to production
@@ -21,9 +28,9 @@ pipelines:
         script:
         - pipe: atlassian/ftp-deploy:0.2.3
           variables:
-                USER: 'admin_aia'
-                PASSWORD: 'Matkhau123!'
-                SERVER: '112.78.2.212'
-                REMOTE_PATH: '/aia.luandinh.com/'
-                LOCAL_PATH: '/dist'
+                USER: $FTP_USER
+                PASSWORD: $FTP_PASSWORD
+                SERVER: $FTP_SERVER
+                REMOTE_PATH: '/aia.luandinh.com/dist'
+                LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/dist'
 
