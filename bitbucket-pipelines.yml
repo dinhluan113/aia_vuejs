@@ -25,6 +25,6 @@ pipelines:
                 USER: 'admin_aia'
                 PASSWORD: 'Matkhau123!'
                 SERVER: 112.78.2.212
-                REMOTE_PATH: /
+                REMOTE_PATH: /aia.luandinh.com/dist
                 LOCAL_PATH: /dist,
 
