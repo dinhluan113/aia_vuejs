@@ -31,6 +31,6 @@ pipelines:
                 USER: $FTP_USER
                 PASSWORD: $FTP_PASSWORD
                 SERVER: $FTP_SERVER
-                REMOTE_PATH: '/aia.luandinh.com/dist'
+                REMOTE_PATH: '/'
                 LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/dist'
 
