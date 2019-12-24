@@ -12,7 +12,6 @@ pipelines:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - npm test
           - npm run build
           
     - step:
@@ -23,7 +22,7 @@ pipelines:
           variables:
                 USER: 'admin_aia'
                 PASSWORD: 'Matkhau123!'
-                SERVER: '112.78.2.212'
-                REMOTE_PATH: '/aia.luandinh.com/'
-                LOCAL_PATH: '/dist'
+                SERVER: 112.78.2.212
+                REMOTE_PATH: aia.luandinh.com
+                LOCAL_PATH: /dist,
 
