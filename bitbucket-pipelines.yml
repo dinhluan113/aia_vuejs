@@ -1,0 +1,29 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:10.15.3
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          - npm install
+          - npm test
+          - npm run build
+          
+    - step:
+        name: Deploy to production
+        deployment: production
+        script:
+        - pipe: atlassian/ftp-deploy:0.2.3
+          variables:
+                USER: 'admin_aia'
+                PASSWORD: 'Matkhau123!'
+                SERVER: '112.78.2.212'
+                REMOTE_PATH: '/aia.luandinh.com/'
+                LOCAL_PATH: '/dist'
+
