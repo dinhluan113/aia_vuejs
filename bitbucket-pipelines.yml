@@ -8,11 +8,11 @@ image: node:10.15.3
 pipelines:
   default:
     - step:
+        name: Build
         caches:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - npm run serve
           - npm run build
           - npm run test
           - npm run lint
@@ -26,6 +26,6 @@ pipelines:
                 USER: 'admin_aia'
                 PASSWORD: 'Matkhau123!'
                 SERVER: 112.78.2.212
-                REMOTE_PATH: aia.luandinh.com
+                REMOTE_PATH: /
                 LOCAL_PATH: /dist,
 
