@@ -21,9 +21,9 @@ pipelines:
         script:
         - pipe: atlassian/ftp-deploy:0.2.3
           variables:
-                USER: 'admin_aia'
-                PASSWORD: 'Matkhau123!'
-                SERVER: 112.78.2.212
+                USER: $FTP_USER
+                PASSWORD: $FTP_PASSWORD
+                SERVER: $FTP_SERVER
                 REMOTE_PATH: '/aia.luandinh.com/dist'
-                LOCAL_PATH: 'dist' 
+                LOCAL_PATH: '/opt/atlassian/pipelines/agent/build/.bitbucket/pipelines/generated/pipeline/pipes/atlassian/ftp-deploy/dist' 
 
