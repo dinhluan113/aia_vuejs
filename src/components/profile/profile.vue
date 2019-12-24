@@ -24,7 +24,7 @@
                 <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-end"></i></div>
                 <div class="prf_AccountInfo_col2">
                     <strong>Expiration Date</strong>
-                    <p>20/12/2020</p>
+                    <p>20/12/2022</p>
                 </div>
             </div>
             <div class="prf_AccountInfo_Group">
