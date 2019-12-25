@@ -23,10 +23,15 @@ jobs:
         npm run build
         echo "$(ls -la dist/)" 
         ls          
-    - name: ftp-action
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
-      with:
-        ftp_server: '112.78.2.212'
-        ftp_username: 'admin_aia'
-        ftp_password: 'Matkhau123!'
-        local_dir: '/dist'
+      env:
+            ftp_server: '112.78.2.212'
+            ftp_username: 'admin_aia'
+            ftp_password: 'Matkhau123!'
+            local_dir: 'dist'
