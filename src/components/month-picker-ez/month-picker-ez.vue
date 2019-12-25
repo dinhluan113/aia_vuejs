@@ -111,7 +111,7 @@
         }
 
     .mpe_Popup {
-        position: absolute;
+        margin-top: 10px;
         box-shadow: 0px 2px 6px rgba(0,0,0,0.5);
         left: 0;
         right: -2px;
