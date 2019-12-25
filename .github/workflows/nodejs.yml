@@ -25,7 +25,7 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
-        FTP_SERVER: ftp.luandinh.com
+        FTP_SERVER: 112.78.2.212
         FTP_USERNAME: admin_aia
         FTP_PASSWORD: Matkhau123!
         METHOD: sftp
