@@ -29,3 +29,8 @@ jobs:
         FTP_USERNAME: admin_aia
         FTP_PASSWORD: Matkhau123!
         LOCAL_DIR: dist
+    - name: LINE Notify
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: 3f5122fccea8c8bd18cc133491df0d7e
+        message: Vuejs AIA FTP Deploy Complete
