@@ -1,36 +1,36 @@
-# This is a sample build configuration for JavaScript.
-# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: node:10.15.3
+name: VueJs CI
 
-pipelines:
-  default:
-    - step:
-        name: Build
-        caches:
-          - node
-        script:
-          - npm install
-          - npm run build
-          - echo "$(ls -la dist/)" 
-          - ls
-        artifacts: # defining the artifacts to be passed to each future step.
-          - dist/**
-    - step:
-        script:
-          - ls
-          
-    - step:
-        name: Deploy to production
-        deployment: production
-        script:
-        - pipe: atlassian/ftp-deploy:0.2.3
-          variables:
-                USER: $FTP_USER
-                PASSWORD: $FTP_PASSWORD
-                SERVER: $FTP_SERVER
-                REMOTE_PATH: '/'
-                LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/dist'
+on: [push]
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build --if-present
+        
+    - name: List output files
+      run: ls
+      
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      env:
+        FTP_SERVER: 112.78.2.212
+        FTP_USERNAME: admin_aia
+        FTP_PASSWORD: Matkhau123!
+        LOCAL_DIR: dist
+    - name: LINE Notify
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: NjhWAFQ35nmlwygPI9zXv1TXoClrACjH13xOKE8eoZ3
+        message: Vuejs AIA FTP Deploy Complete

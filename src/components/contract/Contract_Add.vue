@@ -123,9 +123,8 @@
                     }
                     return response;
                 })
-                .catch(function (error) {
-                    alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                    console.log(error);
+                .catch(function () {
+                    alert("An error occurred, please try again later.");
                 })
                 .finally(function () {
                     self.isShowLoading = false;
@@ -167,8 +166,7 @@
                         return response;
                     })
                     .catch(function (error) {
-                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                        console.log(error);
+                        alert("An error occurred, please try again later.");
                         if (error.response.status === 401)
                             self.$router.push("/login");
                     })

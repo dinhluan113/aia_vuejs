@@ -1,11 +1,21 @@
 import Repository from "./Repository";
 
-const resource = "/AiaUsers";
+const resource = "/aiausers";
 export default {
-    get() {
-        return Repository.get(`${resource}/GetAll`);
+    get(id) {
+        return Repository.get(`${resource}/${id}`, {
+            'headers': {
+                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+            },
+            crossDomain: true
+        });
     },
-    checkExist(username, password) {
-        return Repository.get(`${resource}/CheckUser?username=${username}&password=${password}`);
+    checkExist(user) {
+        return Repository.post(`${resource}`, user, {
+            headers: {
+                'method': 'POST',
+            },
+            crossDomain: true
+        })
     },
 };

@@ -8,8 +8,8 @@
             </div>
         </div>
         <div class="prf_info">
-            <p class="prf_profileName">dinhluan113</p>
-            <p class="prf_profileEmail">nguyendinhluan19@gmail.com</p>
+            <p class="prf_profileName">{{ this.userName }}</p>
+            <p class="prf_profileEmail" style="color: green">Online</p>
         </div>
         <div class="prf_AccountInfo">
             <p class="prf_AccountInfo_title">Account Info</p>
@@ -17,14 +17,14 @@
                 <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-start"></i></div>
                 <div class="prf_AccountInfo_col2">
                     <strong>Date created</strong>
-                    <p>20/12/2019</p>
+                    <p>{{ this.dateCreated }}</p>
                 </div>
             </div>
             <div class="prf_AccountInfo_Group">
                 <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-end"></i></div>
                 <div class="prf_AccountInfo_col2">
                     <strong>Expiration Date</strong>
-                    <p>20/12/2022</p>
+                    <p>{{ this.expirationDate }}</p>
                 </div>
             </div>
             <div class="prf_AccountInfo_Group">
@@ -41,14 +41,14 @@
                 <div class="prf_AccountInfo_col1"><i class="fa fa-file-contract"></i></div>
                 <div class="prf_AccountInfo_col2">
                     <strong>Total contracts:</strong>
-                    <p>00000</p>
+                    <p>{{ this.totalContracts }}</p>
                 </div>
             </div>
             <div class="prf_AccountInfo_Group">
                 <div class="prf_AccountInfo_col1"><i class="fa fa-user-friends"></i></div>
                 <div class="prf_AccountInfo_col2">
                     <strong>Total employees:</strong>
-                    <p>00000</p>
+                    <p>{{ this.totalEmployer }}</p>
                 </div>
             </div>
             <div class="prf_AccountInfo_Group">
@@ -58,22 +58,60 @@
                 </div>
             </div>
         </div>
+        <confirmBox @deleteObject="logout($event)" :isShowing.sync="this.isShowPopupDelete" title="Are you sure you want to continue?" />
+        <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
     </div>
 </template>
 <script>
+    import loading from '@/components/shared/loading.vue'
+
+    import confirmBox from '@/components/shared/popupDelete.vue'
+
+    import { RepositoryFactory } from '@/repositories/RepositoryFactory'
+    const UserRepository = RepositoryFactory.get('users')
+
     export default {
+        components: {
+            loading,
+            confirmBox
+        },
         data: function () {
             return {
-                Model: null
+                isShowLoading: false,
+                isShowPopupDelete: false,
+                userName: "",
+                dateCreated: "",
+                expirationDate: "",
+                totalContracts: 0,
+                totalEmployer: 0
             }
         },
         mounted() {
-
+            let self = this;
+            this.isShowLoading = true;
+            let promise = UserRepository.get(localStorage.getItem('userss'));
+            promise
+                .then(function (response) {
+                    if (response.data != null) {
+                        self.userName = response.data.userName;
+                        self.dateCreated = response.data.dateCreated;
+                        self.expirationDate = response.data.expirationDate;
+                        self.totalContracts = response.data.totalContracts;
+                        self.totalEmployer = response.data.totalEmployer;
+                    }
+                    return response;
+                })
+                .catch(function () {
+                    alert("An error occurred, please try again later.");
+                    this.$router.push('/', () => { });
+                })
+                .finally(function () {
+                    self.isShowLoading = false;
+                })
         },
         methods: {
-            logout() {
-                let r = confirm("Are you sure to logout!");
-                if (r == true) {
+            logout(res) {
+                if (res) {
                     localStorage.removeItem('user');
                     localStorage.removeItem('jwt');
                     this.$router.push('/', () => { });
@@ -86,10 +124,6 @@
 <style>
     #profile {
         background-color: #f1ebfb;
-        height: calc(100vh - 62px);
-        height: -webkit-calc(100vh - 62px);
-        height: -moz-calc(100vh - 62px);
-        overflow-y: scroll;
     }
 
         #profile .prf_header {
@@ -97,7 +131,6 @@
             height: 200px;
             background-size: cover;
             background-repeat: no-repeat;
-            border-bottom-left-radius: 7em;
             text-align: left;
             color: #fff;
             position: relative;

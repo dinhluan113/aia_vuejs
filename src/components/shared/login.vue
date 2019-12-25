@@ -60,11 +60,16 @@ export default {
             if (this.validateUsername() && this.validatePassword()) {
                 this.isShowLoading = true;
                 let self = this;
-                let promise = UsersRepository.checkExist(this.userName, this.password);
+                let dto = {
+                    UserName: this.userName,
+                    Password: this.password
+                };
+                let promise = UsersRepository.checkExist(dto);
                 promise
                     .then(function(response) {
                         if (response.data.statusCode != 404) {
                             localStorage.setItem('user', response.data.username)
+                            localStorage.setItem('userss', response.data.userss)
                             localStorage.setItem('jwt', response.data.token)
 
                             if (localStorage.getItem('jwt') != null) {

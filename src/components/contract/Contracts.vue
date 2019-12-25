@@ -71,9 +71,8 @@
                     self.crrPageIndex = 0;
                     self.loadContractsGetAll();
                 })
-                .catch(function (error) {
-                    alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                    console.log(error);
+                .catch(function () {
+                    alert("An error occurred, please try again later.");
                 })
                 .finally(function () {
                 });
