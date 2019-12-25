@@ -156,7 +156,7 @@
                                     {
                                         title: 'Close',
                                         default: true,
-                                        handler: () => { 
+                                        handler: () => {
                                             self.$router.go(-1);
                                             self.$modal.hide('dialog');
                                         }
@@ -183,12 +183,13 @@
 <style>
     .contract_add {
         position: relative;
-        max-height: calc(100vh - 63px);
-        overflow: scroll;
+        margin-top: 65px;
     }
 
         .contract_add .titleE {
-            position: sticky;
+            position: fixed;
+            left: 0;
+            right: 0;
             top: 0;
         }
 

@@ -120,10 +120,6 @@
 <style>
     #contracts .cta_container {
         position: relative;
-        height: calc(100vh - 62px);
-        height: -webkit-calc(100vh - 62px);
-        height: -moz-calc(100vh - 62px);
-        overflow-y: scroll;
     }
 
     #contracts .cta_Title {

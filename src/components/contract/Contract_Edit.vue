@@ -193,12 +193,13 @@
 <style>
     .contract_edit {
         position: relative;
-        max-height: calc(100vh - 63px);
-        overflow: scroll;
+        margin-top: 65px;
     }
 
         .contract_edit .titleE {
-            position: sticky;
+            position: fixed;
+            left: 0;
+            right: 0;
             top: 0;
         }
 

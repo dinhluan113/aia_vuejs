@@ -67,9 +67,6 @@
 
     #employer_list {
         display: block;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        height: calc(100vh - 63px);
     }
 
         #employer_list .titleE {
