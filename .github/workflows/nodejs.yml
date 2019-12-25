@@ -25,8 +25,8 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
-        ftp_server: ftp.luandinh.com
-        ftp_username: admin_aia
-        ftp_password: ${{ secrets.FTP_PASSWORD }}
+        FTP_SERVER: ftp.luandinh.com
+        FTP_USERNAME: admin_aia
+        FTP_PASSWORD: Matkhau123!
         METHOD: sftp
         local_dir: dist
