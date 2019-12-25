@@ -28,5 +28,4 @@ jobs:
         FTP_SERVER: 112.78.2.212
         FTP_USERNAME: admin_aia
         FTP_PASSWORD: Matkhau123!
-        METHOD: sftp
         local_dir: dist
