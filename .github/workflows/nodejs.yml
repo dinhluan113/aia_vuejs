@@ -4,13 +4,10 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x]
-
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
@@ -31,7 +28,7 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
-            ftp_server: 112.78.2.212
+            ftp_server: ftp.luandinh.com
             ftp_username: admin_aia
             ftp_password: ${{ secrets.FTP_PASSWORD }}
             local_dir: dist
