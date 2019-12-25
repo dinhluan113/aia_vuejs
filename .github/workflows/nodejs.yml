@@ -21,6 +21,14 @@ jobs:
         echo "$(ls -la dist/)" 
         ls 
         
+    - uses: actions/checkout@v1
+    - run: mkdir -p path/to/artifact
+    - run: echo hello > path/to/artifact/world.txt
+    - uses: actions/upload-artifact@v1
+      with:
+        name: my-artifact
+        path: path/to/artifact
+      
     - uses: actions/checkout@master
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
@@ -28,4 +36,4 @@ jobs:
         FTP_SERVER: 112.78.2.212
         FTP_USERNAME: admin_aia
         FTP_PASSWORD: Matkhau123!
-        local_dir: dist
+        LOCAL_DIR: dist
