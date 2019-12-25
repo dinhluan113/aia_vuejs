@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="commitBoxContainer">
-            <div class="commitBox commitBox123">
+            <div class="commitBox">
                 <h3>Commit by month</h3>
                 <table>
                     <tr>
