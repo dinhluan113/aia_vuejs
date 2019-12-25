@@ -31,7 +31,7 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
-            ftp_server: '112.78.2.212'
-            ftp_username: 'admin_aia'
-            ftp_password: 'Matkhau123!'
-            local_dir: 'dist'
+            ftp_server: 112.78.2.212
+            ftp_username: admin_aia
+            ftp_password: ${{ secrets.FTP_PASSWORD }}
+            local_dir: dist
