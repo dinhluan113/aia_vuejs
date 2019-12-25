@@ -22,7 +22,6 @@ jobs:
     - name: List output files
       run: ls
       
-    - uses: actions/checkout@master
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       env:
