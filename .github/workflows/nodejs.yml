@@ -24,10 +24,9 @@ jobs:
         echo "$(ls -la dist/)" 
         ls          
     - name: ftp-action
-      uses: sebastianpopp/ftp-action@v1.1.0
+      uses: SamKirkland/FTP-Deploy-Action@2.0.0
       with:
-        host: '112.78.2.212'
-        user: 'admin_aia'
-        password: 'Matkhau123!'
-        localDir: '/dist'
-        remoteDir: '/'
+        ftp_server: '112.78.2.212'
+        ftp_username: 'admin_aia'
+        ftp_password: 'Matkhau123!'
+        local_dir: '/dist'
