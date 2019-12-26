@@ -37,6 +37,7 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     margin-bottom: 70px !important;
+    min-height: 498px;
 }
 
 .month-picker__year {

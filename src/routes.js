@@ -27,7 +27,7 @@ const routes = [
     { path: '/contracts/edit/:id', name: "contractsedit", component: ContractsEdit, meta: { requiresAuth: true, layout: 'no-footer' } },
 
     { path: '/login', name: "login", component: Login, meta: { layout: 'no-footer' } },
-    { path: '/profile', name: "Profile", component: Profile },
+    { path: '/profile', name: "Profile", component: Profile, meta: { requiresAuth: true } },
 ];
 
 export default routes;

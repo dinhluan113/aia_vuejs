@@ -5,7 +5,7 @@
         <div id="popupDelete">
             <div class="pD_group1">
                 <div class="pD_header">{{ this.title }}</div>
-                <a href="javascript:void(0)" class="pD_btnDelete" @click="confirmDelete()">Delete</a>
+                <a href="javascript:void(0)" class="pD_btnDelete" @click="confirmDelete()">{{ this.txtBtnConfirm }}</a>
             </div>
             <div class="pD_group2">
                 <a href="javascript:void(0)" class="pD_btnCancel" @click="cancelDelete()">Cancel</a>
@@ -19,7 +19,11 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Bạn có chắc muốn xóa không?"
+            default: "Are you sure you want to continue?"
+        },
+        txtBtnConfirm: {
+            type: String,
+            default: "Delete"
         },
         isShowing: {
             type: Boolean,

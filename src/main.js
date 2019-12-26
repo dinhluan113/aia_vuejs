@@ -31,13 +31,8 @@ router.beforeEach((to, from, next) => {
         } else {
             next()
         }
-    } else if (to.matched.some(record => record.meta.guest)) {
-        if (localStorage.getItem('jwt') == null) {
-            next()
-        } else {
-            next({ path: '/' })
-        }
-    } else {
+    }
+    else {
         next()
     }
 })

@@ -52,7 +52,6 @@
                         </option>
                         <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
                     </select>
-                    <p>{{ selected }}</p>
                 </div>
             </section>
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
