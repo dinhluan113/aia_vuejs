@@ -20,18 +20,18 @@
             })
         },
         methods: {
-            checkStatus() {
-                var getAuth = window.gapi.auth2.getAuthInstance();
-                var isLogedin = getAuth.isSignedIn.get();
-                if (isLogedin) {
-                    let profile = getAuth.currentUser.get();
-                    let basicProfile = profile.getBasicProfile();
-                    console.log(basicProfile.getId());
-                    console.log(basicProfile.getName());
-                    console.log(basicProfile.getEmail());
-                    console.log(basicProfile.getImageUrl());
-                }
-            }
+            //checkStatus() {
+            //    var getAuth = window.gapi.auth2.getAuthInstance();
+            //    var isLogedin = getAuth.isSignedIn.get();
+            //    if (isLogedin) {
+            //        let profile = getAuth.currentUser.get();
+            //        let basicProfile = profile.getBasicProfile();
+            //        //console.log(basicProfile.getId());
+            //        //console.log(basicProfile.getName());
+            //        //console.log(basicProfile.getEmail());
+            //        //console.log(basicProfile.getImageUrl());
+            //    }
+            //}
         }
     }
 </script>

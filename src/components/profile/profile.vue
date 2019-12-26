@@ -4,7 +4,8 @@
             <a href="javascript:void(0)" @click="this.$router.go(-1)"><i class="fa fa-arrow-left"></i></a>
             <p>Profile Settings</p>
             <div class="prf_avatar">
-                <i class="fa fa-user"></i>
+                <i v-if="this.avatar==''" class="fa fa-user"></i>
+                <img v-else :src="this.avatar" />
             </div>
         </div>
         <div class="prf_info">
@@ -82,6 +83,7 @@
                 userName: "",
                 dateCreated: "",
                 expirationDate: "",
+                avatar: "",
                 totalContracts: 0,
                 totalEmployer: 0
             }
@@ -100,10 +102,27 @@
                         self.totalEmployer = response.data.totalEmployer;
                     }
                     return response;
+                }).
+                then(function (response) {
+                    var getAuth = window.gapi.auth2.getAuthInstance();
+                    var isLogedin = getAuth.isSignedIn.get();
+                    if (isLogedin) {
+                        let profile = getAuth.currentUser.get();
+                        let basicProfile = profile.getBasicProfile();
+                        //console.log(basicProfile.getId());
+                        //console.log(basicProfile.getName());
+                        //console.log(basicProfile.getEmail());
+                        self.avatar = basicProfile.getImageUrl();
+                    }
+                    else {
+                        alert("Please log in again");
+                        self.logout(true);
+                    }
+                    return response;
                 })
                 .catch(function () {
                     alert("An error occurred, please try again later.");
-                    this.$router.push('/', () => { });
+                    //self.$router.push('/', () => { });
                 })
                 .finally(function () {
                     self.isShowLoading = false;
@@ -188,6 +207,10 @@
                     color: #712ce2;
                 }
 
+                #profile .prf_header .prf_avatar img {
+                    border-radius: 100px;
+                }
+
         #profile .prf_info {
             padding-top: 65px;
             color: #787786;
@@ -197,52 +220,52 @@
 
             #profile .prf_info .prf_profileName {
                 color: #4a4956;
-            font-size: 1.2em;
-            }
-
-    #profile .prf_AccountInfo {
-        text-align: left;
-        background: #fff;
-        padding: 20px;
-        margin: 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 11px -5px rgba(0,0,0,0.5);
-    }
-
-        #profile .prf_AccountInfo .prf_AccountInfo_title {
-            color: #4a4956;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        #profile .prf_AccountInfo .prf_AccountInfo_Group {
-            display: flex;
-            margin: 15px 0;
-            color: #787786;
-        }
-
-            #profile .prf_AccountInfo .prf_AccountInfo_Group:first-child {
-                margin-top: 0;
-            }
-
-            #profile .prf_AccountInfo .prf_AccountInfo_Group:last-child {
-                margin-bottom: 0;
-            }
-
-        #profile .prf_AccountInfo .prf_AccountInfo_col1 {
-            min-width: 21px;
-            justify-content: center;
-            align-items: center;
-            display: inline-flex;
-            padding: 0 10px 0 0;
-        }
-
-            #profile .prf_AccountInfo .prf_AccountInfo_col1 i {
                 font-size: 1.2em;
-                color: #712ce2;
             }
 
-        #profile .prf_AccountInfo .prf_AccountInfo_col2 {
-            line-height: 1.5em;
+        #profile .prf_AccountInfo {
+            text-align: left;
+            background: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 11px -5px rgba(0,0,0,0.5);
         }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_title {
+                color: #4a4956;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_Group {
+                display: flex;
+                margin: 15px 0;
+                color: #787786;
+            }
+
+                #profile .prf_AccountInfo .prf_AccountInfo_Group:first-child {
+                    margin-top: 0;
+                }
+
+                #profile .prf_AccountInfo .prf_AccountInfo_Group:last-child {
+                    margin-bottom: 0;
+                }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_col1 {
+                min-width: 21px;
+                justify-content: center;
+                align-items: center;
+                display: inline-flex;
+                padding: 0 10px 0 0;
+            }
+
+                #profile .prf_AccountInfo .prf_AccountInfo_col1 i {
+                    font-size: 1.2em;
+                    color: #712ce2;
+                }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_col2 {
+                line-height: 1.5em;
+            }
 </style>
