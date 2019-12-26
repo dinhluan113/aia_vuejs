@@ -13,45 +13,60 @@
     align-items: center;
 }
 
-#lg .lgContainer {
-    margin-top: -40%;
-}
+    #lg .lgContainer {
+        margin-top: -40%;
+    }
 
-#lg .imgLogo {
-    width: 200px;
-    height: auto;
-    margin: auto;
-    opacity: 0.5;
-}
+    #lg .imgLogo {
+        width: 200px;
+        height: auto;
+        margin: auto;
+        opacity: 0.5;
+    }
 
-#lg .frmGroup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    #lg .frmGroup {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-#lg .frmGroup i {
-    color: #fff;
-    opacity: 0.5;
-    margin-right: 15px;
-}
+        #lg .frmGroup i {
+            color: #fff;
+            opacity: 0.5;
+            margin-right: 15px;
+        }
 
-#lg .frmGroup input {
-    background: transparent;
-    border: none;
-    padding: 7px;
-    border-bottom: 1px solid #3e464d;
-    margin: 10px;
-    color: #fff;
-    width: 190px;
-}
+        #lg .frmGroup input {
+            background: transparent;
+            border: none;
+            padding: 7px;
+            border-bottom: 1px solid #3e464d;
+            margin: 10px;
+            color: #fff;
+            width: 190px;
+        }
 
-#lg .btnLogin {
-    color: #fff;
-    border: 1px solid #8d89a2;
-    padding: 10px;
-    border-radius: 30px;
-    margin: 15px auto 0;
-    display: block;
-    width: 99px;
-}
+    #lg .btnLogin {
+        color: #fff;
+        border: 1px solid #8d89a2;
+        padding: 10px;
+        border-radius: 30px;
+        margin: 15px auto 0;
+        display: block;
+        width: 99px;
+    }
+
+    #lg .lg_SocialGr a {
+        margin: 0 10px;
+    }
+    #lg .lg_SocialGr img {
+        width: 25px;
+        height: auto;
+    }
+
+    #lg .lg_Note{
+        color: #ccc;
+        display: block;
+        text-align: center;
+        margin: 50px 0 10px;
+    }

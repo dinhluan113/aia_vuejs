@@ -54,11 +54,11 @@
             <div class="prf_AccountInfo_Group">
                 <div class="prf_AccountInfo_col1"><i class="fa fa-sign-out-alt"></i></div>
                 <div class="prf_AccountInfo_col2">
-                    <a href="javascript:void(0)" @click="logout()">Log out</a>
+                    <a href="javascript:void(0)" @click="showPopupComfirmLogout()">Log out</a>
                 </div>
             </div>
         </div>
-        <confirmBox @deleteObject="logout($event)" :isShowing.sync="this.isShowPopupDelete" title="Are you sure you want to continue?" />
+        <confirmBox @deleteObject="logout($event)" :isShowing.sync="this.isShowPopupDelete" txtBtnConfirm="Log out" title="Are you sure you want to continue?" />
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
     </div>
 </template>
@@ -110,12 +110,17 @@
                 })
         },
         methods: {
+            showPopupComfirmLogout() {
+                this.isShowPopupDelete = true;
+            },
             logout(res) {
                 if (res) {
                     localStorage.removeItem('user');
                     localStorage.removeItem('jwt');
                     this.$router.push('/', () => { });
                 }
+                else
+                    this.isShowPopupDelete = false;
             }
         }
     }

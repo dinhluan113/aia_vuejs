@@ -5,99 +5,129 @@
             <div class="mainContainer">
                 <div class="frmGroup">
                     <i class="fa fa-user"></i>
-                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()"/>
+                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()" />
                 </div>
                 <div class="frmGroup">
                     <i class="fa fa-key"></i>
-                    <input ref="password" id="txtPassword" type="password" name="txtPassword" placeholder="Password" v-model="password" v-on:blur="validatePassword()" v-on:keyup.enter="submitLogin()"/>
+                    <input ref="password" id="txtPassword" type="password" name="txtPassword" placeholder="Password" v-model="password" v-on:blur="validatePassword()" v-on:keyup.enter="submitLogin()" />
                 </div>
                 <a href="javascript:void(0)" v-on:click="submitLogin()" class="btnLogin">Login</a>
-                <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
+
+                <p class="lg_Note">Or Sign In using</p>
+                <div class="lg_SocialGr">
+                    <a href="javascript:void(0)"><img src="../../assets/img/facebook.svg" /></a>
+                    <a href="javascript:void(0)"><img src="../../assets/img/google.svg" /></a>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div>
+                <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import loading from './loading.vue'
-import { RepositoryFactory } from '../../repositories/RepositoryFactory'
-const UsersRepository = RepositoryFactory.get('users')
-export default {
-    data() {
-        return {
-            userName: "",
-            password: "",
-            isShowLoading: false
-        }
-    },
-    components: {
-        loading
-    },
-    created() {},
-    methods: {
-        validateUsername() {
-            if (this.userName === '')
-                this.$refs.username.style.borderBottom = "1px solid red";
-            else
-                this.$refs.username.style.borderBottom = "1px solid #3e464d";
-            return this.userName !== '';
-        },
-        validatePassword() {
-            if (this.password === '')
-                this.$refs.password.style.borderBottom = "1px solid red";
-            else
-                this.$refs.password.style.borderBottom = "1px solid #3e464d";
-            return this.password !== '';
-        },
-        submitLogin() {
-            if (!this.validateUsername()) {
-                this.$refs.username.focus();
-                return false;
+    import loading from './loading.vue'
+    import { RepositoryFactory } from '../../repositories/RepositoryFactory'
+    const UsersRepository = RepositoryFactory.get('users')
+    export default {
+        data() {
+            return {
+                userName: "",
+                password: "",
+                isShowLoading: false
             }
-            if (!this.validateUsername()) {
-                this.$refs.password.focus();
-                return false;
-            }
-            if (this.validateUsername() && this.validatePassword()) {
-                this.isShowLoading = true;
-                let self = this;
-                let dto = {
-                    UserName: this.userName,
-                    Password: this.password
-                };
-                let promise = UsersRepository.checkExist(dto);
-                promise
-                    .then(function(response) {
-                        if (response.data.statusCode != 404) {
-                            localStorage.setItem('user', response.data.username)
-                            localStorage.setItem('userss', response.data.userss)
-                            localStorage.setItem('jwt', response.data.token)
+        },
+        components: {
+            loading
+        },
+        mounted() {
+            const meta = document.createElement("meta");
+            meta.setAttribute("name", "google-signin-client_id");
+            meta.setAttribute("content", "875113149574-kpt6jg37vge4on0tt0edjusn61r8t3tp.apps.googleusercontent.com");
+            document.head.appendChild(meta);
 
-                            if (localStorage.getItem('jwt') != null) {
-                                self.$emit('loggedIn')
-                                if (self.$route.params.nextUrl != null) {
-                                    self.$router.push(this.$route.params.nextUrl)
-                                } else {
-                                    self.$router.push('/', () => {});
+            const plugin = document.createElement("script");
+            plugin.setAttribute("src", "//apis.google.com/js/platform.js");
+            plugin.async = true;
+            document.head.appendChild(plugin);
+        },
+        methods: {
+            validateUsername() {
+                if (this.userName === '')
+                    this.$refs.username.style.borderBottom = "1px solid red";
+                else
+                    this.$refs.username.style.borderBottom = "1px solid #3e464d";
+                return this.userName !== '';
+            },
+            validatePassword() {
+                if (this.password === '')
+                    this.$refs.password.style.borderBottom = "1px solid red";
+                else
+                    this.$refs.password.style.borderBottom = "1px solid #3e464d";
+                return this.password !== '';
+            },
+            onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            },
+            signOut() {
+                //var auth2 = gapi.auth2.getAuthInstance();
+                //auth2.signOut().then(function () {
+                //    console.log('User signed out.');
+                //});
+            },
+            submitLogin() {
+                if (!this.validateUsername()) {
+                    this.$refs.username.focus();
+                    return false;
+                }
+                if (!this.validateUsername()) {
+                    this.$refs.password.focus();
+                    return false;
+                }
+                if (this.validateUsername() && this.validatePassword()) {
+                    this.isShowLoading = true;
+                    let self = this;
+                    let dto = {
+                        UserName: this.userName,
+                        Password: this.password
+                    };
+                    let promise = UsersRepository.checkExist(dto);
+                    promise
+                        .then(function (response) {
+                            if (response.data.statusCode != 404) {
+                                localStorage.setItem('user', response.data.username)
+                                localStorage.setItem('userss', response.data.userss)
+                                localStorage.setItem('jwt', response.data.token)
+
+                                if (localStorage.getItem('jwt') != null) {
+                                    self.$emit('loggedIn')
+                                    if (self.$route.params.nextUrl != null) {
+                                        self.$router.push(this.$route.params.nextUrl)
+                                    } else {
+                                        self.$router.push('/', () => { });
+                                    }
                                 }
+                            } else {
+                                alert("Sai tên đăng nhập hoặc mật khẩu");
                             }
-                        } else {
-                            alert("Sai tên đăng nhập hoặc mật khẩu");
-                        }
-                        return response;
-                    })
-                    .catch(function(e) {
-                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                        console.log(e);
-                    })
-                    .finally(function() {
-                        self.isShowLoading = false;
-                    });
+                            return response;
+                        })
+                        .catch(function (e) {
+                            alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
+                            console.log(e);
+                        })
+                        .finally(function () {
+                            self.isShowLoading = false;
+                        });
+                }
             }
-        }
-    },
-}
+        },
+    }
 </script>
 
 <style>
-@import "styleLogin.css";
+    @import "styleLogin.css";
 </style>
