@@ -3,9 +3,9 @@
         <div class="lgContainer">
             <img src="../../assets/img/logo.png" alt="logo" class="imgLogo" />
             <div class="mainContainer">
-                <div class="frmGroup">
+                <!--<div class="frmGroup">
                     <i class="fa fa-user"></i>
-                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()" />
+                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username or Email" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()" />
                 </div>
                 <div class="frmGroup">
                     <i class="fa fa-key"></i>
@@ -13,11 +13,9 @@
                 </div>
                 <a href="javascript:void(0)" v-on:click="submitLogin()" class="btnLogin">Login</a>
 
-                <p class="lg_Note">Or Sign In using</p>
+                <p class="lg_Note">Or Sign In using</p>-->
                 <div class="lg_SocialGr">
-                    <a href="javascript:void(0)"><img src="../../assets/img/facebook.svg" /></a>
-                    <a href="javascript:void(0)"><img src="../../assets/img/google.svg" /></a>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <gSigninButton @done="onUserLoggedIn"/>
                 </div>
                 <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
             </div>
@@ -26,6 +24,7 @@
 </template>
 <script>
     import loading from './loading.vue'
+    import gSigninButton from './google_signin_button.vue'
     import { RepositoryFactory } from '../../repositories/RepositoryFactory'
     const UsersRepository = RepositoryFactory.get('users')
     export default {
@@ -33,22 +32,15 @@
             return {
                 userName: "",
                 password: "",
-                isShowLoading: false
+                isShowLoading: false,
+                client_id: "875113149574-kpt6jg37vge4on0tt0edjusn61r8t3tp.apps.googleusercontent.com"
             }
         },
         components: {
-            loading
+            loading,
+            gSigninButton
         },
         mounted() {
-            const meta = document.createElement("meta");
-            meta.setAttribute("name", "google-signin-client_id");
-            meta.setAttribute("content", "875113149574-kpt6jg37vge4on0tt0edjusn61r8t3tp.apps.googleusercontent.com");
-            document.head.appendChild(meta);
-
-            const plugin = document.createElement("script");
-            plugin.setAttribute("src", "//apis.google.com/js/platform.js");
-            plugin.async = true;
-            document.head.appendChild(plugin);
         },
         methods: {
             validateUsername() {
@@ -65,18 +57,15 @@
                     this.$refs.password.style.borderBottom = "1px solid #3e464d";
                 return this.password !== '';
             },
-            onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-                console.log('Name: ' + profile.getName());
-                console.log('Image URL: ' + profile.getImageUrl());
-                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-            },
-            signOut() {
-                //var auth2 = gapi.auth2.getAuthInstance();
-                //auth2.signOut().then(function () {
-                //    console.log('User signed out.');
-                //});
+            onUserLoggedIn(user) {
+                console.log(user);
+                let basicProfile = user.getBasicProfile();
+                this.userName = basicProfile.getEmail();
+                this.password = basicProfile.getId();
+                //console.log(basicProfile.getId());
+                //console.log(basicProfile.getName());
+                //console.log(basicProfile.getEmail());
+                //console.log(basicProfile.getImageUrl());
             },
             submitLogin() {
                 if (!this.validateUsername()) {
