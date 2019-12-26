@@ -1,8 +1,7 @@
 <template>
     <div id="googleLoginButton">
-        <div ref="signinBtn" class="btn-sign-in"><img src="../../assets/img/google.svg" /></div>
-        <a href="#" @click="signOut()">Sign out</a>
-        <a href="#" @click="checkStatus()">CheckStatus</a>
+        <a href="javascript:void(0)" ref="signinBtn" class="btn-sign-in"><img src="../../assets/img/google.svg" /> LOG IN WITH GOOGLE</a>
+        <!--<a href="#" @click="checkStatus()">CheckStatus</a>-->
     </div>
 </template>
 
@@ -11,7 +10,7 @@
         mounted() {
             window.gapi.load('auth2', () => {
                 const auth2 = window.gapi.auth2.init({
-                    client_id: "875113149574-kpt6jg37vge4on0tt0edjusn61r8t3tp.apps.googleusercontent.com",
+                    client_id: process.env.VUE_APP_CLIENT_ID,
                     cookiepolicy: 'single_host_origin'
                 })
 
@@ -21,12 +20,6 @@
             })
         },
         methods: {
-            signOut() {
-                var auth2 = window.gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function () {
-                    console.log('User signed out.');
-                });
-            },
             checkStatus() {
                 var getAuth = window.gapi.auth2.getAuthInstance();
                 var isLogedin = getAuth.isSignedIn.get();
@@ -42,3 +35,18 @@
         }
     }
 </script>
+
+<style>
+    .btn-sign-in {
+        background: #e04a32;
+        color: #fff;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+    }
+    .btn-sign-in img{
+        margin-right: 10px;
+    }
+</style>

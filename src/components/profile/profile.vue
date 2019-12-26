@@ -115,9 +115,19 @@
             },
             logout(res) {
                 if (res) {
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('jwt');
-                    this.$router.push('/', () => { });
+                    let self = this;
+                    try {
+                        var auth2 = window.gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            localStorage.removeItem('user');
+                            localStorage.removeItem('jwt');
+                            self.$router.push('/', () => { });
+                        });
+                    } catch (e) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('jwt');
+                        this.$router.push('/', () => { });
+                    }
                 }
                 else
                     this.isShowPopupDelete = false;
@@ -187,52 +197,52 @@
 
             #profile .prf_info .prf_profileName {
                 color: #4a4956;
-                font-size: 2em;
+            font-size: 1.2em;
             }
 
-        #profile .prf_AccountInfo {
-            text-align: left;
-            background: #fff;
-            padding: 20px;
-            margin: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 11px -5px rgba(0,0,0,0.5);
+    #profile .prf_AccountInfo {
+        text-align: left;
+        background: #fff;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 11px -5px rgba(0,0,0,0.5);
+    }
+
+        #profile .prf_AccountInfo .prf_AccountInfo_title {
+            color: #4a4956;
+            font-weight: bold;
+            font-size: 1.2em;
         }
 
-            #profile .prf_AccountInfo .prf_AccountInfo_title {
-                color: #4a4956;
-                font-weight: bold;
+        #profile .prf_AccountInfo .prf_AccountInfo_Group {
+            display: flex;
+            margin: 15px 0;
+            color: #787786;
+        }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_Group:first-child {
+                margin-top: 0;
+            }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_Group:last-child {
+                margin-bottom: 0;
+            }
+
+        #profile .prf_AccountInfo .prf_AccountInfo_col1 {
+            min-width: 21px;
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+            padding: 0 10px 0 0;
+        }
+
+            #profile .prf_AccountInfo .prf_AccountInfo_col1 i {
                 font-size: 1.2em;
+                color: #712ce2;
             }
 
-            #profile .prf_AccountInfo .prf_AccountInfo_Group {
-                display: flex;
-                margin: 15px 0;
-                color: #787786;
-            }
-
-                #profile .prf_AccountInfo .prf_AccountInfo_Group:first-child {
-                    margin-top: 0;
-                }
-
-                #profile .prf_AccountInfo .prf_AccountInfo_Group:last-child {
-                    margin-bottom: 0;
-                }
-
-            #profile .prf_AccountInfo .prf_AccountInfo_col1 {
-                min-width: 21px;
-                justify-content: center;
-                align-items: center;
-                display: inline-flex;
-                padding: 0 10px 0 0;
-            }
-
-                #profile .prf_AccountInfo .prf_AccountInfo_col1 i {
-                    font-size: 1.2em;
-                    color: #712ce2;
-                }
-
-            #profile .prf_AccountInfo .prf_AccountInfo_col2 {
-                line-height: 1.5em;
-            }
+        #profile .prf_AccountInfo .prf_AccountInfo_col2 {
+            line-height: 1.5em;
+        }
 </style>

@@ -3,19 +3,11 @@
         <div class="lgContainer">
             <img src="../../assets/img/logo.png" alt="logo" class="imgLogo" />
             <div class="mainContainer">
-                <!--<div class="frmGroup">
-                    <i class="fa fa-user"></i>
-                    <input ref="username" id="txtUserName" name="txtUserName" placeholder="Username or Email" v-model="userName" v-on:blur="validateUsername()" v-on:keyup.enter="submitLogin()" />
-                </div>
-                <div class="frmGroup">
-                    <i class="fa fa-key"></i>
-                    <input ref="password" id="txtPassword" type="password" name="txtPassword" placeholder="Password" v-model="password" v-on:blur="validatePassword()" v-on:keyup.enter="submitLogin()" />
-                </div>
-                <a href="javascript:void(0)" v-on:click="submitLogin()" class="btnLogin">Login</a>
 
-                <p class="lg_Note">Or Sign In using</p>-->
+                <p class="lg_title">Welcome to your app</p>
+
                 <div class="lg_SocialGr">
-                    <gSigninButton @done="onUserLoggedIn"/>
+                    <gSigninButton @done="onUserLoggedIn" />
                 </div>
                 <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
             </div>
@@ -32,8 +24,9 @@
             return {
                 userName: "",
                 password: "",
+                token: "",
                 isShowLoading: false,
-                client_id: "875113149574-kpt6jg37vge4on0tt0edjusn61r8t3tp.apps.googleusercontent.com"
+                client_id: process.env.VUE_APP_CLIENT_ID
             }
         },
         components: {
@@ -41,27 +34,28 @@
             gSigninButton
         },
         mounted() {
+            if (localStorage.getItem('jwt') != null) {
+                this.$emit('loggedIn')
+                if (this.$route.params.nextUrl != null) {
+                    this.$router.push(this.$route.params.nextUrl)
+                } else {
+                    this.$router.push('/', () => { });
+                }
+            }
         },
         methods: {
             validateUsername() {
-                if (this.userName === '')
-                    this.$refs.username.style.borderBottom = "1px solid red";
-                else
-                    this.$refs.username.style.borderBottom = "1px solid #3e464d";
                 return this.userName !== '';
             },
             validatePassword() {
-                if (this.password === '')
-                    this.$refs.password.style.borderBottom = "1px solid red";
-                else
-                    this.$refs.password.style.borderBottom = "1px solid #3e464d";
                 return this.password !== '';
             },
             onUserLoggedIn(user) {
-                console.log(user);
                 let basicProfile = user.getBasicProfile();
                 this.userName = basicProfile.getEmail();
                 this.password = basicProfile.getId();
+                this.token = user.getAuthResponse().id_token;
+                this.submitLogin();
                 //console.log(basicProfile.getId());
                 //console.log(basicProfile.getName());
                 //console.log(basicProfile.getEmail());
@@ -81,7 +75,8 @@
                     let self = this;
                     let dto = {
                         UserName: this.userName,
-                        Password: this.password
+                        Password: this.password,
+                        token: this.token
                     };
                     let promise = UsersRepository.checkExist(dto);
                     promise
