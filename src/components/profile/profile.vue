@@ -100,23 +100,7 @@
                         self.expirationDate = response.data.expirationDate;
                         self.totalContracts = response.data.totalContracts;
                         self.totalEmployer = response.data.totalEmployer;
-                    }
-                    return response;
-                }).
-                then(function (response) {
-                    var getAuth = window.gapi.auth2.getAuthInstance();
-                    var isLogedin = getAuth.isSignedIn.get();
-                    if (isLogedin) {
-                        let profile = getAuth.currentUser.get();
-                        let basicProfile = profile.getBasicProfile();
-                        //console.log(basicProfile.getId());
-                        //console.log(basicProfile.getName());
-                        //console.log(basicProfile.getEmail());
-                        self.avatar = basicProfile.getImageUrl();
-                    }
-                    else {
-                        alert("Please log in again");
-                        self.logout(true);
+                        self.avatar = response.data.avatar;
                     }
                     return response;
                 })

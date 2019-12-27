@@ -1,16 +1,27 @@
 <template>
     <div id="lg">
         <div class="lgContainer">
-            <img src="../../assets/img/logo.png" alt="logo" class="imgLogo" />
-            <div class="mainContainer">
+            <img src="../../assets/img/logo.png" alt="logo" class="imgLogo" v-if="this.showValidate == false" />
+            <div class="mainContainer" v-if="this.showValidate == false">
+
+                <img v-if="this.avatar != ''" :src="this.avatar" />
 
                 <p class="lg_title">Welcome to your app</p>
 
                 <div class="lg_SocialGr">
                     <gSigninButton @done="onUserLoggedIn" />
                 </div>
-                <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
             </div>
+            <div class="mainContainer" v-else>
+
+                <img v-if="this.avatar != ''" :src="this.avatar" class="lg_avatar" />
+
+                <p class="lg_msg">Registration email sent to <br /><strong>{{ this.userName }}</strong><br />Open this email to finish signup.</p>
+                <p class="lg_msg_smaller">If you don’t see this email in your inbox within 15 minutes, look for it in your junk mail folder. If you find it there, please mark the email as “Not Junk”.</p>
+
+            </div>
+            <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
+
         </div>
     </div>
 </template>
@@ -24,7 +35,9 @@
             return {
                 userName: "",
                 password: "",
+                avatar: "",
                 token: "",
+                showValidate: false,
                 isShowLoading: false,
                 client_id: process.env.VUE_APP_CLIENT_ID
             }
@@ -59,7 +72,7 @@
                 //console.log(basicProfile.getId());
                 //console.log(basicProfile.getName());
                 //console.log(basicProfile.getEmail());
-                //console.log(basicProfile.getImageUrl());
+                this.avatar = basicProfile.getImageUrl();
             },
             submitLogin() {
                 if (!this.validateUsername()) {
@@ -76,12 +89,15 @@
                     let dto = {
                         UserName: this.userName,
                         Password: this.password,
-                        token: this.token
+                        token: this.token,
+                        avatar: this.avatar,
                     };
                     let promise = UsersRepository.checkExist(dto);
                     promise
                         .then(function (response) {
-                            if (response.data.statusCode != 404) {
+                            if (response.data.statusCode == 200) {
+                                self.showValidate = false;
+
                                 localStorage.setItem('user', response.data.username)
                                 localStorage.setItem('userss', response.data.userss)
                                 localStorage.setItem('jwt', response.data.token)
@@ -89,12 +105,16 @@
                                 if (localStorage.getItem('jwt') != null) {
                                     self.$emit('loggedIn')
                                     if (self.$route.params.nextUrl != null) {
-                                        self.$router.push(this.$route.params.nextUrl)
+                                        self.$router.push(self.$route.params.nextUrl)
                                     } else {
                                         self.$router.push('/', () => { });
                                     }
                                 }
-                            } else {
+                            }
+                            else if (response.data.statusCode == 401) {
+                                self.showValidate = true;
+                            }
+                            else {
                                 alert("Sai tên đăng nhập hoặc mật khẩu");
                             }
                             return response;

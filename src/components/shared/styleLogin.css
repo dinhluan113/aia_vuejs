@@ -85,3 +85,25 @@
         text-align: center;
         margin: 50px 0 10px;
     }
+
+    #lg .lg_avatar {
+        width: auto;
+        border-radius: 100px;
+        border: 1px solid #4d8ac5;
+        margin-bottom: 35px;
+    }
+
+    #lg .mainContainer {
+        padding: 0 10px;
+    }
+
+    #lg .lg_msg, #lg .lg_msg strong {
+        font-size: 1.2em;
+        line-height: 1.5em;
+        color: #fff;
+    }
+
+    #lg .lg_msg_smaller {
+        margin-top: 15px;
+        color: #d4d4d4;
+    }
