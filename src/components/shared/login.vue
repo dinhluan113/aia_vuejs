@@ -68,11 +68,11 @@
                 this.userName = basicProfile.getEmail();
                 this.password = basicProfile.getId();
                 this.token = user.getAuthResponse().id_token;
+                this.avatar = basicProfile.getImageUrl();
                 this.submitLogin();
                 //console.log(basicProfile.getId());
                 //console.log(basicProfile.getName());
                 //console.log(basicProfile.getEmail());
-                this.avatar = basicProfile.getImageUrl();
             },
             submitLogin() {
                 if (!this.validateUsername()) {

@@ -12,6 +12,7 @@ import ContractsEdit from './components/contract/Contract_Edit.vue';
 
 import Login from './components/shared/login.vue'
 import Profile from './components/profile/profile.vue'
+import Validate from './components/profile/validate.vue'
 
 const routes = [
     { path: '/', name: "dashboard", component: Home, meta: { requiresAuth: true } },
@@ -28,6 +29,7 @@ const routes = [
 
     { path: '/login', name: "login", component: Login, meta: { layout: 'no-footer' } },
     { path: '/profile', name: "Profile", component: Profile, meta: { requiresAuth: true } },
+    { path: '/emailvalidate', name: "Validate", component: Validate, meta: { layout: 'no-footer' }  },
 ];
 
 export default routes;

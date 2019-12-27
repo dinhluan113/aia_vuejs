@@ -10,6 +10,11 @@ export default {
             crossDomain: true
         });
     },
+    validate(token) {
+        return Repository.get(`${resource}/validate?token=${token}`, {
+            crossDomain: true
+        });
+    },
     checkExist(user) {
         return Repository.post(`${resource}`, user, {
             headers: {
