@@ -50,24 +50,6 @@
                             localStorage.setItem('userv2', response.data.username)
                             localStorage.setItem('userssv2', response.data.userss)
                             localStorage.setItem('jwtv2', response.data.token)
-                            //let inter = setInterval(function () {
-                            //    self.secondCountdown -= 1;
-                            //    if (self.secondCountdown <= 0) {
-                            //        clearInterval(inter);
-                            //        localStorage.setItem('user', response.data.username)
-                            //        localStorage.setItem('userss', response.data.userss)
-                            //        localStorage.setItem('jwt', response.data.token)
-
-                            //        if (localStorage.getItem('jwt') != null) {
-
-                            //            if (self.$route.params.nextUrl != null) {
-                            //                self.$router.push(self.$route.params.nextUrl)
-                            //            } else {
-                            //                self.$router.push('/', () => { });
-                            //            }
-                            //        }
-                            //    }
-                            //}, 1000);
                         }
                         else
                             self.isVerifiedStatus = 2;
