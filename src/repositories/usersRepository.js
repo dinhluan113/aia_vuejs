@@ -5,7 +5,7 @@ export default {
     get(id) {
         return Repository.get(`${resource}/${id}`, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });

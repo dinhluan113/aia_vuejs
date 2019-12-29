@@ -6,7 +6,7 @@ export default {
     GetAll(pagesize, pageindex, employerId = 0, month = 0, year = 0) {
         return Repository.get(`${resource}?pagesize=${pagesize}&pageindex=${pageindex}&employerid=${employerId}&month=${month}&year=${year}`, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
@@ -14,7 +14,7 @@ export default {
     GetById(id) {
         return Repository.get(`${resource}/${id}`, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
@@ -22,7 +22,7 @@ export default {
     Add(obj) {
         return Repository.post(`${resource}`, obj, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
@@ -30,7 +30,7 @@ export default {
     Update(obj) {
         return Repository.put(`${resource}`, obj, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
@@ -38,7 +38,7 @@ export default {
     Delete(id) {
         return Repository.delete(`${resource}?id=${id}`, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });

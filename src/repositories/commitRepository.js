@@ -12,7 +12,7 @@ export default {
             headers: {
                 'method': 'POST',
                 // 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
@@ -20,7 +20,7 @@ export default {
     GetCommitByMonth(month, year) {
         return Repository.get(`${resource}?month=${month}&year=${year}`, {
             'headers': {
-                Authorization: 'Bearer ' + localStorage.getItem('jwt')
+                Authorization: 'Bearer ' + localStorage.getItem('jwtv2')
             },
             crossDomain: true
         });
