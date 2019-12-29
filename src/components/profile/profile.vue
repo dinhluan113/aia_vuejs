@@ -130,7 +130,7 @@
                     } catch (e) {
                         localStorage.removeItem('userv2');
                         localStorage.removeItem('jwtv2');
-                            localStorage.removeItem('userssv2');
+                        localStorage.removeItem('userssv2');
                         this.$router.push('/', () => { });
                     }
                 }
