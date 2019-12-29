@@ -47,9 +47,9 @@
                     if (response.data != null) {
                         if (parseInt(response.data.statusCode) == 200) {
                             self.isVerifiedStatus = 1;
-                            localStorage.setItem('user', response.data.username)
-                            localStorage.setItem('userss', response.data.userss)
-                            localStorage.setItem('jwt', response.data.token)
+                            localStorage.setItem('userv2', response.data.username)
+                            localStorage.setItem('userssv2', response.data.userss)
+                            localStorage.setItem('jwtv2', response.data.token)
                             //let inter = setInterval(function () {
                             //    self.secondCountdown -= 1;
                             //    if (self.secondCountdown <= 0) {

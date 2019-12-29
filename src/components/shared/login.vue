@@ -48,6 +48,12 @@
         },
         mounted() {
             if (localStorage.getItem('jwt') != null) {
+
+                localStorage.removeItem('user');
+                localStorage.removeItem('jwt');
+                localStorage.removeItem('userss');
+            }
+            if (localStorage.getItem('jwtv2') != null) {
                 this.$emit('loggedIn')
                 if (this.$route.params.nextUrl != null) {
                     this.$router.push(this.$route.params.nextUrl)
@@ -98,11 +104,11 @@
                             if (response.data.statusCode == 200) {
                                 self.showValidate = false;
 
-                                localStorage.setItem('user', response.data.username)
-                                localStorage.setItem('userss', response.data.userss)
-                                localStorage.setItem('jwt', response.data.token)
+                                localStorage.setItem('userv2', response.data.username);
+                                localStorage.setItem('userssv2', response.data.userss);
+                                localStorage.setItem('jwtv2', response.data.token);
 
-                                if (localStorage.getItem('jwt') != null) {
+                                if (localStorage.getItem('jwtv2') != null) {
                                     self.$emit('loggedIn')
                                     if (self.$route.params.nextUrl != null) {
                                         self.$router.push(self.$route.params.nextUrl)

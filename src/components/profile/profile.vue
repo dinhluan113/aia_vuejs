@@ -91,7 +91,7 @@
         mounted() {
             let self = this;
             this.isShowLoading = true;
-            let promise = UserRepository.get(localStorage.getItem('userss'));
+            let promise = UserRepository.get(localStorage.getItem('userssv2'));
             promise
                 .then(function (response) {
                     if (response.data != null) {
@@ -122,13 +122,15 @@
                     try {
                         var auth2 = window.gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function () {
-                            localStorage.removeItem('user');
-                            localStorage.removeItem('jwt');
+                            localStorage.removeItem('userv2');
+                            localStorage.removeItem('jwtv2');
+                            localStorage.removeItem('userssv2');
                             self.$router.push('/', () => { });
                         });
                     } catch (e) {
-                        localStorage.removeItem('user');
-                        localStorage.removeItem('jwt');
+                        localStorage.removeItem('userv2');
+                        localStorage.removeItem('jwtv2');
+                            localStorage.removeItem('userssv2');
                         this.$router.push('/', () => { });
                     }
                 }
