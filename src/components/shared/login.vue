@@ -92,13 +92,13 @@
                 if (this.validateUsername() && this.validatePassword()) {
                     this.isShowLoading = true;
                     let self = this;
-                    let dto = {
-                        UserName: this.userName,
-                        Password: this.password,
-                        token: this.token,
-                        avatar: this.avatar,
-                    };
-                    let promise = UsersRepository.checkExist(dto);
+                    //let dto = {
+                    //    UserName: this.userName,
+                    //    Password: this.password,
+                    //    token: this.token,
+                    //    avatar: this.avatar,
+                    //};
+                    let promise = UsersRepository.checkExist(self.token);
                     promise
                         .then(function (response) {
                             if (response.data.statusCode == 200) {

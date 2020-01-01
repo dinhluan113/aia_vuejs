@@ -15,11 +15,8 @@ export default {
             crossDomain: true
         });
     },
-    checkExist(user) {
-        return Repository.post(`${resource}`, user, {
-            headers: {
-                'method': 'POST',
-            },
+    checkExist(token) {
+        return Repository.get(`${resource}/login?token=${token}`, {
             crossDomain: true
         })
     },
