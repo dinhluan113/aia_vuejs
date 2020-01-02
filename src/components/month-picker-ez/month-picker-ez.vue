@@ -10,14 +10,14 @@
             <table class="table-condensed">
                 <thead>
                     <tr>
-                        <th class="prev" style="visibility: visible;">«</th>
-                        <th class="crrYear">2019</th>
-                        <th class="next" style="visibility: visible;">»</th>
+                        <th class="prev" style="visibility: visible;" @click="changeYear(true)">«</th>
+                        <th class="crrYear">{{ this.tmpYear }}</th>
+                        <th class="next" style="visibility: visible;" @click="changeYear(false)">»</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="i in 4" :key="i">
-                        <td v-for="j in 3" :key="j" :class="{ 'active' : ((j - 1) + (i - 1)*3 + 1) == month, 'circleMonth': typeMonth === 1 || typeMonth === 2}">
+                        <td v-for="j in 3" :key="j" :class="{ 'active' : ((j - 1) + (i - 1)*3 + 1) == month && year == tmpYear, 'circleMonth': typeMonth === 1 || typeMonth === 2}">
                             <span v-on:click="changeMonth()" :data-month="(j - 1) + (i - 1)*3 + 1">{{ lstYearNameTmp[(j - 1) + (i - 1)*3] }}</span>
                         </td>
                     </tr>
@@ -30,10 +30,6 @@
 <script>
     export default {
         props: {
-            year: {
-                type: String,
-                default: String((new Date()).getFullYear())
-            },
             typeMonth: {
                 type: Number,
                 default: 2
@@ -46,6 +42,8 @@
         data: function () {
             return {
                 month: String((new Date()).getMonth() + 1).padStart(2, '0'),
+                year: new Date().getFullYear(),
+                tmpYear: new Date().getFullYear(),
                 hidePopup: true,
                 lstYearNameTmp: this.typeMonth === 0 ? ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"] : this.typeMonth === 1 ? ["T.1", "T.2", "T.3", "T.4", "T.5", "T.6", "T.7", "T.8", "T.9", "T.10", "T.11", "T.12"] : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
             }
@@ -53,6 +51,7 @@
         methods: {
             changeMonth: function () {
                 var iM = event.target.getAttribute('data-month');
+                this.year = this.tmpYear;
                 this.month = iM;
                 this.showHidePopup();
                 var returnObj = { month: iM, year: this.year };
@@ -60,7 +59,13 @@
             },
             showHidePopup: function () {
                 this.hidePopup = !this.hidePopup;
-            }
+            },
+            changeYear(isPreOrNext) {
+                if (isPreOrNext)
+                    this.tmpYear = parseInt(this.tmpYear) - 1;
+                else
+                    this.tmpYear = parseInt(this.tmpYear) + 1;
+            },
         }
     };
 </script>
@@ -115,8 +120,10 @@
         box-shadow: 0px 2px 6px rgba(0,0,0,0.5);
         left: 0;
         right: -2px;
-        top: 41px;
+        top: 32px;
         padding-bottom: 5px;
+        position: absolute;
+        background: #fff;
     }
 
         .mpe_Popup.hidePopup {
@@ -136,6 +143,7 @@
         .mpe_Popup thead {
             background-color: #039789;
             color: #fff;
+            border-bottom: 7px solid #fff;
         }
 
             .mpe_Popup thead .crrYear {
