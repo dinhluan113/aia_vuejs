@@ -129,7 +129,8 @@
                         return response;
                     })
                     .catch(function () {
-                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
+                        alert("Vui lòng đăng nhập lại.");
+                        self.$router.push('/login', () => { });
                     })
                     .finally(function () {
                         self.closePopupChangeCommit();
