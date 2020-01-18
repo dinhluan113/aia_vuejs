@@ -141,7 +141,7 @@
                         return response;
                     })
                     .catch(function () {
-                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");z
+                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
                     })
                     .finally(function () {
                         self.closePopupChangeCommit();
