@@ -130,7 +130,20 @@
                     })
                     .catch(function () {
                         alert("Vui lòng đăng nhập lại.");
-                        self.$router.push('/login', () => { });
+                        try {
+                            var auth2 = window.gapi.auth2.getAuthInstance();
+                            auth2.signOut().then(function () {
+                                localStorage.removeItem('userv2');
+                                localStorage.removeItem('jwtv2');
+                                localStorage.removeItem('userssv2');
+                                self.$router.push('/login', () => { });
+                            });
+                        } catch (e) {
+                            localStorage.removeItem('userv2');
+                            localStorage.removeItem('jwtv2');
+                            localStorage.removeItem('userssv2');
+                            this.$router.push('/login', () => { });
+                        }
                     })
                     .finally(function () {
                         self.closePopupChangeCommit();
