@@ -106,10 +106,21 @@
                         return response;
                     })
                     .catch(function (error) {
-                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");
-                        console.log(error);
-                        if (error.response.status === 401)
-                            self.$router.push("/login");
+                        alert("Vui lòng đăng nhập lại.");
+                        try {
+                            var auth2 = window.gapi.auth2.getAuthInstance();
+                            auth2.signOut().then(function () {
+                                localStorage.removeItem('userv2');
+                                localStorage.removeItem('jwtv2');
+                                localStorage.removeItem('userssv2');
+                                self.$router.push('/login', () => { });
+                            });
+                        } catch (e) {
+                            localStorage.removeItem('userv2');
+                            localStorage.removeItem('jwtv2');
+                            localStorage.removeItem('userssv2');
+                            this.$router.push('/login', () => { });
+                        }
                     })
                     .finally(function () {
                         self.isShowLoading = false;
@@ -129,21 +140,7 @@
                         return response;
                     })
                     .catch(function () {
-                        alert("Vui lòng đăng nhập lại.");
-                        try {
-                            var auth2 = window.gapi.auth2.getAuthInstance();
-                            auth2.signOut().then(function () {
-                                localStorage.removeItem('userv2');
-                                localStorage.removeItem('jwtv2');
-                                localStorage.removeItem('userssv2');
-                                self.$router.push('/login', () => { });
-                            });
-                        } catch (e) {
-                            localStorage.removeItem('userv2');
-                            localStorage.removeItem('jwtv2');
-                            localStorage.removeItem('userssv2');
-                            this.$router.push('/login', () => { });
-                        }
+                        alert("Đã có lỗi xảy ra vui lòng thử lại sau.");z
                     })
                     .finally(function () {
                         self.closePopupChangeCommit();
