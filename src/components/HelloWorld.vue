@@ -105,7 +105,7 @@
                         }
                         return response;
                     })
-                    .catch(function (error) {
+                    .catch(function () {
                         alert("Vui lòng đăng nhập lại.");
                         try {
                             var auth2 = window.gapi.auth2.getAuthInstance();
@@ -119,6 +119,7 @@
                             localStorage.removeItem('userv2');
                             localStorage.removeItem('jwtv2');
                             localStorage.removeItem('userssv2');
+                            console.log(e);
                             this.$router.push('/login', () => { });
                         }
                     })
