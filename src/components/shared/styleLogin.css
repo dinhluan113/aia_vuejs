@@ -73,6 +73,8 @@
         background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
         background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
+        border: none;
+        cursor: pointer;
     }
 
     #lg .lg_SocialGr a {
@@ -125,4 +127,8 @@
         text-align: center;
         padding: 5px 0;
         font-size: 2em;
+    }
+
+    #lg .frmGroup input.txtError {
+        border: 1px solid red;
     }

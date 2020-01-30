@@ -67,3 +67,9 @@ body {
     .titleE > i {
         cursor: pointer;
     }
+
+.getAppBanner {
+    max-width: 620px;
+    margin: 25px auto 10px;
+    position: relative;
+}

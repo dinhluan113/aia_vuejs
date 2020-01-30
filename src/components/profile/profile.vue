@@ -32,7 +32,7 @@
                 <div class="prf_AccountInfo_Group">
                     <div class="prf_AccountInfo_col1"><i class="fa fa-money-check-alt"></i></div>
                     <div class="prf_AccountInfo_col2">
-                        <a href="javascript:void(0)" @click="addCredit()">Gia hạn tài khoản</a>
+                        <a href="javascript:void(0)" @click="onChangePassword()">Đổi mật khẩu</a>
                     </div>
                 </div>
             </div>
@@ -118,6 +118,13 @@
         methods: {
             showPopupComfirmLogout() {
                 this.isShowPopupDelete = true;
+            },
+            onChangePassword() {
+
+                this.$modal.show('dialog', {
+                    title: 'Thông báo', text: 'Tính năng đang phát triển',
+                    buttons: [{ title: 'Đóng', default: true, handler: () => { this.$modal.hide('dialog'); } }]
+                });
             },
             logout(res) {
                 if (res) {

@@ -8,13 +8,17 @@
                 <div class="cta_SearchGrp">
                     <select class="cta_sl" @change="onChangeEmployer($event)" accesskey="">
                         <option value="0">
-                            Tất cả
+                            Tất cả nhân viên
                         </option>
                         <option v-for="item in this.arrEmployer" v-bind:key="item.id" :value="item.id">
                             {{ item.name }}
                         </option>
                     </select>
-                    <MonthPicker @changeMonthInput="changeMonth($event)" />
+                    <div class="cta_SearchContainer">
+                        <input class="cta_txtSearch" placeholder="Tìm kiếm hợp đồng" v-model="crrKeyword"/>
+                        <a href="javascript:void(0)" @click="onSeach()"><i class="fa fa-search"></i></a>
+                    </div>
+                    <!--<MonthPicker @changeMonthInput="changeMonth($event)" />-->
                 </div>
             </div>
             <div class="cta_lstItems">
@@ -34,7 +38,7 @@
 <script>
     import loading from '@/components/shared/loading.vue'
     import contractItem from './Contracts_item.vue'
-    import MonthPicker from '@/components/month-picker-ez/month-picker-ez.vue'
+    //import MonthPicker from '@/components/month-picker-ez/month-picker-ez.vue'
 
     import { RepositoryFactory } from '@/repositories/RepositoryFactory'
     const EmployerRepository = RepositoryFactory.get('employer')
@@ -43,7 +47,7 @@
         components: {
             loading,
             contractItem,
-            MonthPicker,
+            //MonthPicker,
         },
         data: function () {
             return {
@@ -55,7 +59,9 @@
                 crrEmployerId: 0,
                 crrMonth: new Date().getMonth() + 1,
                 crrYear: new Date().getFullYear(),
-                txtTotal: ''
+                txtTotal: '',
+                keyword: '',
+                crrKeyword: '',
             }
         },
         mounted() {
@@ -89,10 +95,14 @@
                 this.crrPageIndex = 0;
                 this.loadContractsGetAll();
             },
+            onSeach() {
+                this.keyword = this.crrKeyword;
+                this.loadContractsGetAll();
+            },
             loadContractsGetAll() {
                 let self = this;
                 this.isShowLoading = true;
-                ContractRepository.GetAll(10, self.crrPageIndex, self.crrEmployerId, self.crrMonth, self.crrYear).then(function (rs2) {
+                ContractRepository.GetAll(10, self.crrPageIndex, self.crrEmployerId, self.keyword).then(function (rs2) {
                     if (rs2.data != null) {
                         if (self.crrPageIndex <= 0)
                             self.arrContracts = [];
@@ -112,12 +122,12 @@
                 this.crrPageIndex += 1;
                 this.loadContractsGetAll();
             },
-            changeMonth(res) {
-                this.crrPageIndex = 0;
-                this.crrMonth = res.month;
-                this.crrYear = res.year;
-                this.loadContractsGetAll();
-            }
+            //changeMonth(res) {
+            //    this.crrPageIndex = 0;
+            //    this.crrMonth = res.month;
+            //    this.crrYear = res.year;
+            //    this.loadContractsGetAll();
+            //}
         }
     };
 </script>
@@ -265,5 +275,17 @@
         background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
         background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
+    }
+
+    #contracts .cta_SearchContainer{
+        padding: 5px 10px;
+        border-radius: 50px;
+        border: 1px solid #ccc;
+        background-color:#fff;
+        display: flex;
+    }
+    #contracts .cta_SearchContainer input{
+        border: none;
+        background-color: transparent;
     }
 </style>

@@ -1,20 +1,21 @@
 <template>
     <div id="lg">
         <div class="lgContainer">
-            <div class="mainContainer" v-if="this.showValidate == false">
+            <form class="mainContainer" v-if="this.showValidate == false" @submit.prevent="submitLogin">
                 <div>
                     <div>
                         <p style="font-size: 2em">Your Contracts.<span style="color: #11bbb5;font-size: 1em"> Greener.</span></p>
                         <p style="font-size: 0.9em; color: #666">Quản lý thông tin hợp đồng</p>
                         <img src="../../assets/img/logo.v2.png" alt="logo" class="imgLogo" />
+                        <p style="font-size: 0.9em; color: #666">Đăng nhập nhanh bằng địa chỉ Email. Không cần đăng ký.</p>
                     </div>
                     <div class="frmGroup">
-                        <input ref="username" type="email" v-model="userName" placeholder="Email" />
+                        <input ref="username" type="email" :class="{'txtError': !this.$v.userName.email}"  v-model="userName" placeholder="Email" />
                         <input ref="password" type="password" v-model="password" placeholder="Mật khẩu" />
-                        <a href="javascript:void(0)" class="btnLogin" @click="submitLogin()">Đăng nhập</a>
+                        <button class="btnLogin">Đăng nhập</button>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="mainContainer" v-else>
                 <p class="lg_Note">Mã xác thực đăng ký đã được gửi tới email:</p>
                 <p class="lg_Note" style="font-weight: 700 ; margin-top: 5px; margin-bottom: 5px">{{this.userName}}</p>
@@ -39,6 +40,7 @@
     </div>
 </template>
 <script>
+    import { email } from "vuelidate/lib/validators";
     import loading from './loading.vue'
     import { RepositoryFactory } from '../../repositories/RepositoryFactory'
     const UsersRepository = RepositoryFactory.get('users')
@@ -59,6 +61,9 @@
         },
         components: {
             loading,
+        },
+        validations: {
+            userName: { email }
         },
         mounted() {
             if (localStorage.getItem('jwt') != null) {
@@ -136,12 +141,17 @@
                         self.isShowLoading = false;
                     });
             },
-            submitLogin() {
-                if (!this.validateUsername()) {
+            submitLogin(e) {
+                e.preventDefault();
+                if (!this.validateUsername() || !this.$v.userName.email) {
                     this.$refs.username.focus();
+                    this.$modal.show('dialog', {
+                        title: 'Lỗi', text: 'Email không hợp lệ',
+                        buttons: [{ title: 'Đóng', default: true, handler: () => { this.$modal.hide('dialog'); } }]
+                    });
                     return false;
                 }
-                if (!this.validateUsername()) {
+                if (!this.validatePassword()) {
                     this.$refs.password.focus();
                     return false;
                 }
@@ -175,7 +185,10 @@
                                 self.showValidate = true;
                             }
                             else {
-                                alert("Sai tên đăng nhập hoặc mật khẩu");
+                                self.$modal.show('dialog', {
+                                    title: 'Lỗi', text: 'Sai tên đăng nhập hoặc mật khẩu',
+                                    buttons: [{ title: 'Đóng', default: true, handler: () => { self.$modal.hide('dialog'); } }]
+                                });
                             }
                             return response;
                         })

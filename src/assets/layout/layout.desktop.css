@@ -16,4 +16,8 @@
         bottom: 55px;
         z-index: 9999;
     }
+
+    .getAppBanner {
+        margin-top: 50px;
+    }
 }
