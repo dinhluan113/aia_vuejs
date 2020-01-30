@@ -1,8 +1,8 @@
 ﻿<template>
     <div id="profile">
         <div class="prf_header">
-            <a href="javascript:void(0)" @click="this.$router.go(-1)"><i class="fa fa-arrow-left"></i></a>
-            <p>Profile Settings</p>
+            <a href="javascript:void(0)" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></a>
+            <p>Tài khoản</p>
             <div class="prf_avatar">
                 <i v-if="this.avatar==''" class="fa fa-user"></i>
                 <img v-else :src="this.avatar" />
@@ -12,54 +12,57 @@
             <p class="prf_profileName">{{ this.userName }}</p>
             <p class="prf_profileEmail" style="color: green">Online</p>
         </div>
-        <div class="prf_AccountInfo">
-            <p class="prf_AccountInfo_title">Account Info</p>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-start"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <strong>Date created</strong>
-                    <p>{{ this.dateCreated }}</p>
+        <div class="prf_AccountInfo_Container">
+            <div class="prf_AccountInfo">
+                <p class="prf_AccountInfo_title">Tài khoản</p>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-start"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <strong>Ngày tạo</strong>
+                        <p>{{ this.dateCreated }}</p>
+                    </div>
+                </div>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-end"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <strong>Ngày hết hạn</strong>
+                        <p>{{ this.expirationDate }}</p>
+                    </div>
+                </div>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-money-check-alt"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <a href="javascript:void(0)" @click="addCredit()">Gia hạn tài khoản</a>
+                    </div>
                 </div>
             </div>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-hourglass-end"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <strong>Expiration Date</strong>
-                    <p>{{ this.expirationDate }}</p>
+
+            <div class="prf_AccountInfo">
+                <p class="prf_AccountInfo_title">Tổng quan</p>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-file-contract"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <strong>Tổng số hợp đồng đã tạo:</strong>
+                        <p>{{ this.totalContracts }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-money-check-alt"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <a href="javascript:void(0)" @click="addCredit()">Add credit</a>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-user-friends"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <strong>Tổng số nhân viên:</strong>
+                        <p>{{ this.totalEmployer }}</p>
+                    </div>
+                </div>
+                <div class="prf_AccountInfo_Group">
+                    <div class="prf_AccountInfo_col1"><i class="fa fa-sign-out-alt"></i></div>
+                    <div class="prf_AccountInfo_col2">
+                        <a href="javascript:void(0)" @click="showPopupComfirmLogout()">Đăng xuất</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="prf_AccountInfo">
-            <p class="prf_AccountInfo_title">Summary</p>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-file-contract"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <strong>Total contracts:</strong>
-                    <p>{{ this.totalContracts }}</p>
-                </div>
-            </div>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-user-friends"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <strong>Total employees:</strong>
-                    <p>{{ this.totalEmployer }}</p>
-                </div>
-            </div>
-            <div class="prf_AccountInfo_Group">
-                <div class="prf_AccountInfo_col1"><i class="fa fa-sign-out-alt"></i></div>
-                <div class="prf_AccountInfo_col2">
-                    <a href="javascript:void(0)" @click="showPopupComfirmLogout()">Log out</a>
-                </div>
-            </div>
-        </div>
-        <confirmBox @deleteObject="logout($event)" :isShowing.sync="this.isShowPopupDelete" txtBtnConfirm="Log out" title="Are you sure you want to continue?" />
+        <confirmBox @deleteObject="logout($event)" :isShowing.sync="this.isShowPopupDelete" txtBtnConfirm="Đăng xuất" title="Bạn có chắc muốn đăng xuất không?" />
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
     </div>
 </template>
@@ -254,4 +257,17 @@
             #profile .prf_AccountInfo .prf_AccountInfo_col2 {
                 line-height: 1.5em;
             }
+
+    @media only screen and (min-width : 1024px) {
+        #profile .prf_AccountInfo_Container {
+            display: flex;
+            max-width: 640px;
+            margin: auto;
+        }
+
+        #profile .prf_AccountInfo {
+            display: inline-block;
+            flex: 1;
+        }
+    }
 </style>

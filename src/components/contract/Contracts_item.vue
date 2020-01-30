@@ -1,16 +1,15 @@
 ﻿<template>
     <router-link :to="{ name: 'contractsedit', params: { id: this.Model.id }}" class="contractItem" v-if="this.Model != null">
         <div class="cta_row1">
-            <i class="fa fa-id-card" />
-            <p class="pName">{{ Model.customer_Name }}</p>
+            <p class="pName">{{ Model.contractId }} - {{ this.Model.customer_Name }}</p>
         </div>
         <div class="cta_row2">
-            <div class="cta_col1" style="min-width: 76px">
-                <p class="cta_sub">Created at</p>
-                <p class="cta_vl">{{ this.dateFormated }}</p>
+            <div class="cta_col1">
+                <p class="cta_sub">Ngày tạo</p>
+                <p class="cta_vl">{{ this.Model.dateCreated }}</p>
             </div>
-            <div class="cta_col2" style="min-width: 125px">
-                <p class="cta_sub">Owner</p>
+            <div class="cta_col2">
+                <p class="cta_sub">Nhân viên</p>
                 <p class="cta_vl">{{ this.Model.userName }}</p>
             </div>
             <div class="cta_col2">
@@ -18,9 +17,9 @@
                 <p class="cta_vl">{{ parseInt(this.Model.nfyp).toLocaleString() + " ₫" }}</p>
             </div>
             <!--<div class="cta_col2">
-                <p class="cta_sub">RFYP</p>
-                <p class="cta_vl">{{ parseInt(this.Model.rfyp).toLocaleString() + " ₫" }}</p>
-            </div>-->
+        <p class="cta_sub">RFYP</p>
+        <p class="cta_vl">{{ parseInt(this.Model.rfyp).toLocaleString() + " ₫" }}</p>
+    </div>-->
         </div>
     </router-link>
 </template>
@@ -35,12 +34,9 @@
         },
         data: function () {
             return {
-                dateFormated: ''
             }
         },
         mounted: function () {
-            var today = new Date(this.Model.dateCreated.substring(0, 10));
-            this.dateFormated = String(today.getDate()).padStart(2, '0') + "/" + String(today.getMonth() + 1).padStart(2, '0') + "/" + today.getFullYear();
         }
     }
 </script>
@@ -48,10 +44,12 @@
 <style>
     .contractItem {
         display: block;
-        padding: 10px 15px;
+        padding: 15px 15px 10px;
         background: #fff;
-        margin: 10px 5px;
+        margin: 10px auto;
         border-radius: 4px;
+        box-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+        max-width: 640px;
     }
 
         .contractItem:first-child {
@@ -71,7 +69,6 @@
 
         .contractItem .cta_row1 .pName {
             display: inline-block;
-            margin-left: 10px;
             font-weight: bold;
             font-size: 1.2em;
         }
@@ -82,21 +79,23 @@
             white-space: nowrap;
             overflow-x: auto;
             overflow-y: hidden;
+            display:flex;
         }
 
             .contractItem > div.cta_row2 > div {
                 display: inline-block;
                 padding: 6px 16px 0 0;
+                flex: 1;    
             }
 
             .contractItem > div.cta_row2 .cta_sub {
-                color: #9a9b9c;
-                font-size: 0.9em;
+                color: #5b5b5b;
+                font-size: 1em;
             }
 
             .contractItem > div.cta_row2 .cta_vl {
-                color: #151e3b;
-                font-size: 0.8em;
+                color: #333;
+                font-size: 1.1em;
                 margin-top: 5px;
             }
 </style>

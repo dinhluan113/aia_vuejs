@@ -10,9 +10,9 @@
             <table class="table-condensed">
                 <thead>
                     <tr>
-                        <th class="prev" style="visibility: visible;" @click="changeYear(true)">«</th>
+                        <th class="prev" style="visibility: visible; cursor: pointer" @click="changeYear(true)">«</th>
                         <th class="crrYear">{{ this.tmpYear }}</th>
-                        <th class="next" style="visibility: visible;" @click="changeYear(false)">»</th>
+                        <th class="next" style="visibility: visible; cursor: pointer" @click="changeYear(false)">»</th>
                     </tr>
                 </thead>
                 <tbody>

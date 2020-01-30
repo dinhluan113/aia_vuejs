@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div v-if="this.isShowing">
         <div id="popupDeleteOverlay">
         </div>
@@ -8,7 +8,7 @@
                 <a href="javascript:void(0)" class="pD_btnDelete" @click="confirmDelete()">{{ this.txtBtnConfirm }}</a>
             </div>
             <div class="pD_group2">
-                <a href="javascript:void(0)" class="pD_btnCancel" @click="cancelDelete()">Cancel</a>
+                <a href="javascript:void(0)" class="pD_btnCancel" @click="cancelDelete()">Hủy</a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@ export default {
         },
         txtBtnConfirm: {
             type: String,
-            default: "Delete"
+            default: "Xóa"
         },
         isShowing: {
             type: Boolean,

@@ -4,7 +4,6 @@
 
 #lg {
     position: fixed;
-    background-image: url(bg.png);
     width: 100%;
     left: 0;
     right: 0;
@@ -28,20 +27,19 @@
     }
 
     #lg .lgContainer {
-        margin-top: -40%;
     }
 
     #lg .imgLogo {
         width: 200px;
         height: auto;
         margin: auto;
-        opacity: 0.5;
     }
 
     #lg .frmGroup {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column
     }
 
         #lg .frmGroup i {
@@ -54,20 +52,27 @@
             background: transparent;
             border: none;
             padding: 7px;
-            border-bottom: 1px solid #3e464d;
+            border: 1px solid #11bbb5;
+            border-radius: 50px;
             margin: 10px;
-            color: #fff;
-            width: 190px;
+            width: calc(100% - 20px);
         }
 
     #lg .btnLogin {
         color: #fff;
-        border: 1px solid #8d89a2;
         padding: 10px;
         border-radius: 30px;
         margin: 15px auto 0;
         display: block;
         width: 99px;
+        background: rgba(41,217,144,1);
+        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
     }
 
     #lg .lg_SocialGr a {
@@ -80,10 +85,11 @@
     }
 
     #lg .lg_Note {
-        color: #ccc;
+        color: #333;
+        font-size: 1.2em;
         display: block;
         text-align: center;
-        margin: 50px 0 10px;
+        margin: 15px 0 10px;
     }
 
     #lg .lg_avatar {
@@ -106,4 +112,17 @@
     #lg .lg_msg_smaller {
         margin-top: 15px;
         color: #d4d4d4;
+    }
+
+    #lg .txtVerify {
+        border: none;
+        margin-left: 10px;
+        background-color: transparent;
+        color: #333;
+        border-bottom: 1px solid #11bbb5;
+        display: inline-block;
+        width: 50px;
+        text-align: center;
+        padding: 5px 0;
+        font-size: 2em;
     }

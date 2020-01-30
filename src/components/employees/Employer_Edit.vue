@@ -1,37 +1,35 @@
 <template>
     <div class="employer_edit">
-        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Edit Employer</h1>
+        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Chỉnh sửa thông tin nhân viên</h1>
         <form @submit.prevent="handleSubmit">
             <section>
                 <div class="col1">
                     <img src="@/assets/img/employer.png" />
                 </div>
-                <div class="col2">
-                    <input class="emInput" :class="{'txtError': !this.$v.objModel.name.required}" v-model="objModel.name" placeholder="add name" required>
-                    <span v-if="!$v.objModel.name.required" class="addLblError">Name is required</span>
-                    <span v-if="!$v.objModel.name.minLength" class="addLblError">Name must have at least {{$v.objModel.name.$params.minLength.min}} letters.</span>
-                    <input class="emInput" v-model="objModel.dateCreated" type="date" :v="this.objModel.dateCreated">
-                    <span v-if="!$v.objModel.dateCreated.required" class="addLblError">Date Created is required</span>
-                </div>
             </section>
             <section class="secPlusInfo">
                 <div class="grInput">
+                    <i class="fa fa-user"></i>
+                    <input class="emInput" :class="{'txtError': !this.$v.objModel.name.required}" v-model="objModel.name" placeholder="Họ tên nhân viên" required>
+                </div>
+                <div class="grInput">
                     <i class="fa fa-phone-alt"></i>
-                    <input class="emInput" :class="{'txtError': !this.$v.objModel.phone.isPhoneNumber}" v-model="objModel.phone" placeholder="Phone">
-                    <span v-if="!$v.objModel.phone.isPhoneNumber" class="addLblError">Phone is invalid</span>
+                    <input class="emInput" :class="{'txtError': !this.$v.objModel.phone.isPhoneNumber}" v-model="objModel.phone" placeholder="Số điện thoại">
+                    <span v-if="!$v.objModel.phone.isPhoneNumber" class="addLblError">Số điện thoại không hợp lệ</span>
                 </div>
                 <div class="grInput">
                     <i class="fa fa-envelope"></i>
                     <input class="emInput" :class="{'txtError': !this.$v.objModel.email.email}" v-model="objModel.email" type="Email" placeholder="Email">
-                    <span v-if="!$v.objModel.email.email" class="addLblError">Email is invalid</span>
+                    <span v-if="!$v.objModel.email.email" class="addLblError">Email không hợp lệ</span>
                 </div>
             </section>
 
-            <div class="btnDelete" @click="deleteEmployer()"><i class="fa fa-trash" style="margin-right: 10px;"></i> Delete</div>
-            <deleteObject @deleteObject="evDeleteObject($event)" :isShowing.sync="this.isShowPopupDelete" title="Are you sure you want to continue? All infomations, contracts of this Employer will be deleted." />
+            <button class="btnActionContract"><i class="fa fa-save"></i> Lưu</button>
+
+            <div class="btnDelete" @click="deleteEmployer()"><i class="fa fa-trash" style="margin-right: 10px;"></i> Xóa</div>
+            <deleteObject @deleteObject="evDeleteObject($event)" :isShowing.sync="this.isShowPopupDelete" title="Bạn có chắc muốn xóa nhân viên này không? Lưu ý: Hành đồng này sẽ xóa toàn bộ hợp đồng do nhân viên này tạo." />
 
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-            <button class="btnAddEmployer"><i class="fa fa-save"></i></button>
         </form>
     </div>
 </template>
@@ -110,10 +108,10 @@
                         if (response.data != null) {
                             self.$modal.show('dialog', {
                                 title: '',
-                                text: 'Employer successfully saved!',
+                                text: 'Lưu thông tin thành công!',
                                 buttons: [
                                     {
-                                        title: 'Close',
+                                        title: 'Đóng',
                                         default: true,
                                         handler: () => { 
                                             self.$router.go(-1);
@@ -185,7 +183,7 @@
         .employer_edit section.secPlusInfo {
             width: 320px;
             margin: auto;
-            padding-bottom: 70px;
+            padding-bottom: 10px;
         }
 
         .employer_edit section > div {
@@ -245,12 +243,13 @@
         background-color: #fff;
         padding: 10px 20px;
         margin: 10px;
-        margin-top: 50px;
         width: 280px;
         margin: auto;
+        margin-top: 50px;
         border-radius: 4px;
         text-align: left;
         color: red;
         border: 1px solid #ffa9ba;
+        cursor: pointer;
     }
 </style>

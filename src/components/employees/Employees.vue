@@ -1,10 +1,12 @@
-<template>
+﻿<template>
     <div id="employer_list">
-        <h1 class="titleE">All Employees List</h1>
-        <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
+        <h1 class="titleE">Danh sách nhân viên</h1>
+        <div class="emp_lstItems">
+            <emItem v-for="item in this.arrEmployer" v-bind:key="item.id" :Model="item" />
+            <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-plus"></i></router-link>
+            <a href="javascript:void(0)" v-if="iRemainItems > 0" @click="loadmoreEmpl()">Xem thêm</a>
+        </div>
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-        <router-link to="/employees/add" class="btnAddEmployer"><i class="fa fa-plus"></i></router-link>
-        <a href="javascript:void(0)" v-if="iRemainItems > 0" @click="loadmoreEmpl()">Load more</a>
     </div>
 </template>
 <script>
@@ -81,6 +83,13 @@
                 font-size: 1em;
             }
 
+        #employer_list .emp_lstItems {
+            max-width: 640px;
+            margin: auto;
+            padding: 10px 0;
+        }
+
+
     .btnAddEmployer {
         box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
         border-radius: 4em;
@@ -94,7 +103,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #039789;
+        background: rgba(41,217,144,1);
+        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
         border: none;
     }
 

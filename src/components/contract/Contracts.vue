@@ -1,12 +1,12 @@
 <template>
     <div id="contracts">
         <div class="cta_container">
-            <h1 class="cta_Title">Manager your team member's contracts</h1>
+            <h1 class="cta_Title">Danh sách hợp đồng</h1>
             <div class="cta_SearchGrp_Gr">
                 <div class="cta_SearchGrp">
                     <select class="cta_sl" @change="onChangeEmployer($event)" accesskey="">
                         <option value="0">
-                            All
+                            Tất cả
                         </option>
                         <option v-for="item in this.arrEmployer" v-bind:key="item.id" :value="item.id">
                             {{ item.name }}
@@ -15,11 +15,11 @@
                     <MonthPicker @changeMonthInput="changeMonth($event)" />
                 </div>
             </div>
-
-            <p class="pTotal">Total results: <b>{{ this.txtTotal }}</b></p>
-            <contractItem v-for="item in this.arrContracts" v-bind:key="item.id" :Model="item" />
-
-            <a href="javasciprt:void(0)" @click="loadmore()" v-if="remainItems > 0" class="btnLoadmore">Load more {{ this.remainItems }} contracts</a>
+            <div class="cta_lstItems">
+                <p class="pTotal">Kết quả: <b>{{ this.txtTotal }}</b></p>
+                <contractItem v-for="item in this.arrContracts" v-bind:key="item.id" :Model="item" />
+            </div>
+            <a href="javasciprt:void(0)" @click="loadmore()" v-if="remainItems > 0" class="btnLoadmore">Xem thêm {{ this.remainItems }} contracts</a>
         </div>
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
         <router-link to="/contracts/add" class="btnAddContract"><i class="fa fa-plus"></i></router-link>
@@ -123,20 +123,36 @@
 
     #contracts .cta_Title {
         font-size: 1.7em;
-        margin: 20px 10px;
+        padding: 20px 10px;
+        color: #fff;
         text-align: center;
+        /*background-color: #039789;*/
+        background: rgba(41,217,144,1);
+        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
     }
 
     #contracts .cta_SearchGrp_Gr {
         position: sticky;
         top: 0;
-        background-color: rgba(242, 242, 242, 0.85);
+        background-color: #e9e9e9;
         padding: 5px 0;
     }
 
     #contracts .pTotal {
         text-align: left;
         padding: 5px 0 0px 10px;
+    }
+
+    #contracts .cta_lstItems{
+        max-width: 640px;
+        margin: auto;
+        padding: 10px 0;
     }
 
     #contracts .cta_SearchGrp {
@@ -205,7 +221,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #039789;
+        background: rgba(41,217,144,1);
+        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
         border: none;
     }
 
@@ -213,4 +236,23 @@
             font-size: 2em;
             color: #fff;
         }
+
+    .btnActionContract{
+        color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        margin: 15px auto 0;
+        display: inline-block;
+        min-width: 90px;    
+        border: none;
+        cursor: pointer;
+        background: rgba(41,217,144,1);
+        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
+    }
 </style>

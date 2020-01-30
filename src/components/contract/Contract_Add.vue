@@ -1,50 +1,55 @@
 <template>
     <div class="contract_add">
-        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Add Contract</h1>
+        <h1 class="titleE"><i class="fa fa-chevron-left" @click="$router.go(-1)"></i> Thêm hợp đồng mới</h1>
         <form @submit.prevent="handleSubmit">
             <section class="secPlusInfo">
                 <div class="grInput">
+                    <label>Mã hợp đồng</label>
+                    <i class="fa fa-user-edit"></i>
+                    <input class="emInput" v-model="objModel.contractId" required>
+                </div>
+                <div class="grInput">
                     <label>NFYP</label>
                     <i class="fa fa-money-check-alt"></i>
-                    <currency-input class="emInput" :value="objModel.Nfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.Nfyp" required />
+                    <currency-input class="emInput" style="text-align: right" :value="objModel.Nfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.Nfyp" required />
                 </div>
                 <div class="grInput">
                     <label>RFYP</label>
                     <i class="fa fa-money-check"></i>
-                    <currency-input class="emInput" :value="objModel.Rfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.Rfyp" required />
+                    <currency-input class="emInput" style="text-align: right" :value="objModel.Rfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.Rfyp" required />
                 </div>
                 <div class="grInput">
                     <label>Phí trượt</label>
                     <i class="fa fa-money-bill"></i>
-                    <currency-input class="emInput" :value="objModel.PhiTruot" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.PhiTruot" required />
+                    <currency-input class="emInput" style="text-align: right" :value="objModel.PhiTruot" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.PhiTruot" required />
                 </div>
                 <div class="grInput">
-                    <label>Customer's Name</label>
+                    <label>Tên khách hàng</label>
                     <i class="fa fa-user-edit"></i>
                     <input class="emInput" v-model="objModel.Customer_Name" required>
                 </div>
                 <div class="grInput">
-                    <label>Customer's Phone</label>
+                    <label>Số điện thoại</label>
                     <i class="fa fa-phone-alt"></i>
                     <input class="emInput" v-model="objModel.Customer_Phone" type="number" maxlength="11" min="10" required>
                 </div>
                 <div class="grInput">
-                    <label>Date</label>
+                    <label>Ngày tạo hợp đồng</label>
                     <i class="fa fa-calendar-alt"></i>
                     <input class="emInput" v-model="objModel.DateCreated" type="date" required>
                 </div>
                 <div class="grInput">
-                    <label>Employer</label>
+                    <label>Nhân viên</label>
                     <select class="cta_sl" v-model="choosedEmployerId" required>
                         <option value="0">
-                            -- Choose a Employer --
+                            -- Chọn nhân viên --
                         </option>
                         <option v-for="item in this.arrEmployer" v-bind:key="item.id" v-bind:value="item.id" required>
                             {{ item.name }}
                         </option>
                     </select>
                 </div>
-                <div class="grInput">
+                <!--<div class="grInput">
                     <label>Contract's type</label>
                     <select class="cta_sl" v-model="choosedTypeId" required>
                         <option value="0">
@@ -52,10 +57,13 @@
                         </option>
                         <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
                     </select>
-                </div>
+                </div>-->
+                
+
             </section>
+            
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-            <button class="btnAddContract"><i class="fa fa-save"></i></button>
+            <button class="btnActionContract"><i class="fa fa-save"></i> Lưu</button>
         </form>
     </div>
 </template>
@@ -80,20 +88,21 @@
                 arrContracts: [],
                 objModel: {
                     Id: 0,
+                    contractId: "",
                     Nfyp: 0,
                     Rfyp: 0,
                     EmployerId: 0,
-                    TypeId: 0,
+                    TypeId: 1,
                     PhiTruot: 0,
                     Customer_Name: '',
                     Customer_Phone: '',
                     DateCreated: (new Date()).getFullYear() + "-" + String((new Date()).getMonth() + 1).padStart(2, '0') + "-" + String((new Date()).getDate()).padStart(2, '0'),
-                    ContractType: 0
+                    ContractType: 1
                 },
                 currency: "VND",
                 locale: "vi-VN",
                 choosedEmployerId: 0,
-                choosedTypeId: 0,
+                choosedTypeId: 1,
                 contractType: [
                     { text: 'Month', value: 1 },
                     { text: 'Year', value: 2 }
@@ -123,7 +132,7 @@
                     return response;
                 })
                 .catch(function () {
-                    alert("An error occurred, please try again later.");
+                    alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
                 })
                 .finally(function () {
                     self.isShowLoading = false;
@@ -149,7 +158,7 @@
                         if (response.data != null) {
                             self.$modal.show('dialog', {
                                 title: '',
-                                text: 'Contract successfully added!',
+                                text: 'Lưu thông tin thành công!',
                                 buttons: [
                                     {
                                         title: 'Close',
@@ -165,7 +174,7 @@
                         return response;
                     })
                     .catch(function (error) {
-                        alert("An error occurred, please try again later.");
+                        alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
                         if (error.response.status === 401)
                             self.$router.push("/login");
                     })
@@ -186,7 +195,7 @@
         .contract_add .titleE {
             position: fixed;
             left: 0;
-            right: 0;
+            right: -1px;
             top: 0;
         }
 

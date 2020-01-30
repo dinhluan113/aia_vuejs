@@ -10,7 +10,7 @@ import Contracts from './components/contract/Contracts.vue';
 import ContractsAdd from './components/contract/Contract_Add.vue';
 import ContractsEdit from './components/contract/Contract_Edit.vue';
 
-import Login from './components/shared/login.vue'
+import Login from './components/shared/login.v2.vue'
 import Profile from './components/profile/profile.vue'
 import Validate from './components/profile/validate.vue'
 

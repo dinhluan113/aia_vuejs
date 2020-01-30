@@ -22,6 +22,7 @@ export default {
 
 <style>
 @import './assets/layout/layout.css';
+@import './assets/layout/layout.desktop.css';
 </style>
 
 <style>

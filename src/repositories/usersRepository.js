@@ -20,4 +20,9 @@ export default {
             crossDomain: true
         })
     },
+    checkLogin(dto) {
+        return Repository.post(`${resource}`, dto, {
+            crossDomain: true
+        });
+    },
 };

@@ -5,9 +5,9 @@
     font-size: 14px;
 }
 
-*:focus {
-    outline: none;
-}
+    *:focus {
+        outline: none;
+    }
 
 input:-internal-autofill-selected {
     background-color: #000 !important;
@@ -17,6 +17,7 @@ input:-internal-autofill-selected {
 a {
     color: #262f50;
     text-decoration: none;
+    cursor: pointer;
 }
 
 body {
@@ -44,17 +45,25 @@ body {
     background: #fff;
 }
 
-.month-picker__year p {
-    padding-top: 14px;
-}
+    .month-picker__year p {
+        padding-top: 14px;
+    }
+
 .titleE {
-    background: rgba(3,151,137,1);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,151,137,1)), color-stop(100%, rgba(0,163,144,1)));
-    background: -webkit-gradient(linear, left top, right top, from(rgba(3,151,137,1)), to(rgba(0,163,144,1)));
-    background: linear-gradient(to right, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#039789', endColorstr='#00a390', GradientType=1 );
+    background: rgba(41,217,144,1);
+    background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+    background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+    background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+    background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
     color: #fff;
     padding: 20px 0;
     font-size: 1.5em;
     position: relative;
 }
+
+    .titleE > i {
+        cursor: pointer;
+    }

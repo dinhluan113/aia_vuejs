@@ -19,32 +19,32 @@
                     <currency-input class="emInput" :value="objModel.phiTruot" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.phiTruot" required />
                 </div>
                 <div class="grInput">
-                    <label>Customer's Name</label>
+                    <label>Tên khách hàng</label>
                     <i class="fa fa-user-edit"></i>
                     <input class="emInput" v-model="objModel.customer_Name" required>
                 </div>
                 <div class="grInput">
-                    <label>Customer's Phone</label>
+                    <label>Số điện thoại</label>
                     <i class="fa fa-phone-alt"></i>
                     <input class="emInput" v-model="objModel.customer_Phone" type="number" maxlength="11" min="10" required>
                 </div>
                 <div class="grInput">
-                    <label>Date</label>
+                    <label>Ngày tạo</label>
                     <i class="fa fa-calendar-alt"></i>
                     <input class="emInput" v-model="objModel.dateCreated" type="date" required>
                 </div>
                 <div class="grInput">
-                    <label>Employer</label>
+                    <label>Nhân viên</label>
                     <select class="cta_sl" v-model="choosedEmployerId" required>
                         <option value="0">
-                            -- Choose a Employer --
+                            -- Chọn nhân viên --
                         </option>
                         <option v-for="item in this.arrEmployer" v-bind:key="item.id" v-bind:value="item.id" required>
                             {{ item.name }}
                         </option>
                     </select>
                 </div>
-                <div class="grInput">
+                <!--<div class="grInput">
                     <label>Contract's type</label>
                     <select class="cta_sl" v-model="choosedTypeId" required>
                         <option value="0">
@@ -52,10 +52,10 @@
                         </option>
                         <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
                     </select>
-                </div>
+                </div>-->
             </section>
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-            <button class="btnAddContract"><i class="fa fa-save"></i></button>
+            <button class="btnActionContract"><i class="fa fa-save"></i> Lưu</button>
         </form>
     </div>
 </template>
@@ -83,17 +83,17 @@
                     nfyp: 0,
                     rfyp: 0,
                     employerId: 0,
-                    typeId: 0,
+                    typeId: 1,
                     phiTruot: 0,
                     customer_Name: '',
                     customer_Phone: '',
                     dateCreated: (new Date()).getFullYear() + "-" + String((new Date()).getMonth() + 1).padStart(2, '0') + "-" + String((new Date()).getDate()).padStart(2, '0'),
-                    contractType: 0
+                    contractType: 1
                 },
                 currency: "VND",
                 locale: "vi-VN",
                 choosedEmployerId: 0,
-                choosedTypeId: 0,
+                choosedTypeId: 1,
                 contractType: [
                     { text: 'Month', value: 1 },
                     { text: 'Year', value: 2 }
@@ -160,10 +160,10 @@
                         if (response.data != null) {
                             self.$modal.show('dialog', {
                                 title: '',
-                                text: 'Contract successfully saved!',
+                                text: 'Lưu thông tin thành công!',
                                 buttons: [
                                     {
-                                        title: 'Close',
+                                        title: 'Đóng',
                                         default: true,
                                         handler: () => { 
                                             self.$router.go(-1);

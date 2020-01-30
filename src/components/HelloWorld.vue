@@ -2,12 +2,12 @@
     <div>
         <div class="commitBoxContainer">
             <div class="commitBox">
-                <h3>Commit by month</h3>
+                <h3>Commit</h3>
                 <table>
                     <tr>
                         <td colspan="2" class="cmBox_Title">
                             <p class="commitBox_value commitBox_value-Big" @click="openPopupChangeCommit()">{{ this.crrCommit.toLocaleString() + " ₫" }}</p>
-                            <p class="commitBox_note">Commit <a href="#" class="iPen" @click="openPopupChangeCommit()"><i class="fa fa-pen"></i></a></p>
+                            <p class="commitBox_note" style="cursor: pointer">Chỉnh sửa <a href="#" class="iPen" @click="openPopupChangeCommit()"><i class="fa fa-pen"></i></a></p>
                         </td>
                     </tr>
                     <tr class="cmBox_FYPNeed">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <!-- <HeaderCp title="Home" /> -->
-        <p>Choose date</p>
+        <p>Tháng/Năm</p>
         <div class="month-container">
             <MonthPicker @changeMonthInput="changeMonth($event)" />
         </div>
@@ -191,7 +191,6 @@
         padding: 15px;
         padding-top: 35px;
         /*background-color: #039789;*/
-        background: rgba(3,151,137,1);
         background: -moz-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
         background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,151,137,1)), color-stop(100%, rgba(0,163,144,1)));
         background: -webkit-linear-gradient(left, rgba(3,151,137,1) 0%, rgba(0,163,144,1) 100%);
@@ -238,19 +237,21 @@
         }
 
         .commitBox .commitBox_note {
-            font-size: 1em;
-            color: #b9b9b9;
+            font-size: 0.9em;
+            color: #cecece;
             margin: 4px 0 6px;
         }
 
         .commitBox .commitBox_value {
             font-weight: bold;
             color: #fff;
+            font-size: 1.5em;
         }
 
         .commitBox .commitBox_value-Big {
             font-size: 3em;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .commitBox .iPen {
