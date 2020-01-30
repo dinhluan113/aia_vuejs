@@ -124,6 +124,7 @@
         padding-bottom: 5px;
         position: absolute;
         background: #fff;
+        z-index: 1;
     }
 
         .mpe_Popup.hidePopup {
