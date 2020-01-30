@@ -4,6 +4,11 @@
         <form @submit.prevent="handleSubmit">
             <section class="secPlusInfo">
                 <div class="grInput">
+                    <label>Mã hợp đồng</label>
+                    <i class="fa fa-user-edit"></i>
+                    <input class="emInput" v-model="objModel.contractId" required>
+                </div>
+                <div class="grInput">
                     <label>NFYP</label>
                     <i class="fa fa-money-check-alt"></i>
                     <currency-input class="emInput" :value="objModel.nfyp" :currency="this.currency" :distraction-free="distractionFree" :locale="this.locale" id="objModel.nfyp" required />
@@ -45,14 +50,14 @@
                     </select>
                 </div>
                 <!--<div class="grInput">
-                    <label>Contract's type</label>
-                    <select class="cta_sl" v-model="choosedTypeId" required>
-                        <option value="0">
-                            -- Choose contract type --
-                        </option>
-                        <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
-                    </select>
-                </div>-->
+        <label>Contract's type</label>
+        <select class="cta_sl" v-model="choosedTypeId" required>
+            <option value="0">
+                -- Choose contract type --
+            </option>
+            <option v-bind:value="item.value" v-bind:key="item.id" v-for="item in this.contractType">{{ item.text }}</option>
+        </select>
+    </div>-->
             </section>
             <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
             <button class="btnActionContract"><i class="fa fa-save"></i> Lưu</button>
@@ -80,6 +85,7 @@
                 arrContracts: [],
                 objModel: {
                     id: 0,
+                    contractId: "",
                     nfyp: 0,
                     rfyp: 0,
                     employerId: 0,
