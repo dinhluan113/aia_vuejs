@@ -48,7 +48,7 @@
         background: #fff;
         margin: 10px auto;
         border-radius: 4px;
-        box-shadow: 0px 0px 4px rgba(0,0,0,0.5);
+        /*box-shadow: 0px 0px 4px rgba(0,0,0,0.5);*/
         max-width: 640px;
     }
 

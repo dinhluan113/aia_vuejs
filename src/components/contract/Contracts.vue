@@ -1,7 +1,9 @@
 <template>
     <div id="contracts">
         <div class="cta_container">
-            <h1 class="cta_Title">Danh sách hợp đồng</h1>
+            <h1 class="cta_Title">
+                Danh sách hợp đồng
+            </h1>
             <div class="cta_SearchGrp_Gr">
                 <div class="cta_SearchGrp">
                     <select class="cta_sl" @change="onChangeEmployer($event)" accesskey="">
@@ -16,13 +18,17 @@
                 </div>
             </div>
             <div class="cta_lstItems">
-                <p class="pTotal">Kết quả: <b>{{ this.txtTotal }}</b></p>
+                <div class="cta_lstItems_toolbar">
+                    <p class="pTotal">
+                        Kết quả: <b>{{ this.txtTotal }}</b>
+                    </p>
+                    <router-link to="/contracts/add" class="btnAddContract"><i class="fa fa-plus"></i> Thêm mới</router-link>
+                </div>
                 <contractItem v-for="item in this.arrContracts" v-bind:key="item.id" :Model="item" />
             </div>
             <a href="javasciprt:void(0)" @click="loadmore()" v-if="remainItems > 0" class="btnLoadmore">Xem thêm {{ this.remainItems }} contracts</a>
         </div>
         <loading v-if="this.isShowLoading" themeName="lds-dual-ring"></loading>
-        <router-link to="/contracts/add" class="btnAddContract"><i class="fa fa-plus"></i></router-link>
     </div>
 </template>
 <script>
@@ -144,16 +150,50 @@
         padding: 5px 0;
     }
 
-    #contracts .pTotal {
-        text-align: left;
-        padding: 5px 0 0px 10px;
-    }
-
-    #contracts .cta_lstItems{
+    #contracts .cta_lstItems {
         max-width: 640px;
         margin: auto;
         padding: 10px 0;
     }
+
+    #contracts .cta_lstItems_toolbar {
+        display: block;
+        padding: 0 10px;
+    }
+
+        #contracts .cta_lstItems_toolbar:after {
+            content: '';
+            clear: both;
+            display: table;
+        }
+
+
+        #contracts .cta_lstItems_toolbar .pTotal {
+            text-align: left;
+            padding: 5px 0 0px 10px;
+            float: left;
+        }
+
+        #contracts .cta_lstItems_toolbar .btnAddContract {
+            float: right;
+            background: rgba(41,217,144,1);
+            background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+            background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
+            background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+            background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+            background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+            background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
+            color: #fff;
+            border-radius: 20px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+            #contracts .cta_lstItems_toolbar .btnAddContract i {
+                font-size: 1em;
+                color: #fff;
+            }
 
     #contracts .cta_SearchGrp {
         display: flex;
@@ -208,42 +248,13 @@
             top: 1px;
         }
 
-    .btnAddContract {
-        box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
-        border-radius: 4em;
-        width: 4em;
-        position: fixed;
-        bottom: 91px;
-        z-index: 1;
-        right: 10px;
-        width: 3.5em;
-        height: 3.5em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgba(41,217,144,1);
-        background: -moz-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
-        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(41,217,144,1)), color-stop(100%, rgba(10,197,184,1)));
-        background: -webkit-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
-        background: -o-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
-        background: -ms-linear-gradient(-45deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
-        background: linear-gradient(135deg, rgba(41,217,144,1) 0%, rgba(10,197,184,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29d990', endColorstr='#0ac5b8', GradientType=1 );
-        border: none;
-    }
-
-        .btnAddContract i {
-            font-size: 2em;
-            color: #fff;
-        }
-
-    .btnActionContract{
+    .btnActionContract {
         color: #fff;
         padding: 10px;
         border-radius: 30px;
         margin: 15px auto 0;
         display: inline-block;
-        min-width: 90px;    
+        min-width: 90px;
         border: none;
         cursor: pointer;
         background: rgba(41,217,144,1);
