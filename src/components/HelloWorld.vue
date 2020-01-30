@@ -33,7 +33,7 @@
 
         <div class="getAppBanner">
             <img src="@/assets/img/getApp.png" style="width: 100%"/>
-            <a href="https://aia.luandinh.com/download/SSContract.apk" style="position: absolute; left: 0; right: 0; top: 53px; margin: auto; width: 148px; border-radius: 14px; height: 50px;" target="_blank"></a>
+            <a href="https://www.luandinh.com/download/SSContract.apk" style="position: absolute; left: 0; right: 0; top: 53px; margin: auto; width: 148px; border-radius: 14px; height: 50px;" target="_blank"></a>
         </div>
         <section class="popupCommit hidden" id="popupCommit">
             <div>

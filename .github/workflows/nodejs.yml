@@ -33,4 +33,4 @@ jobs:
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: NjhWAFQ35nmlwygPI9zXv1TXoClrACjH13xOKE8eoZ3
-        message: Vuejs AIA FTP Deploy Complete
+        message: Vuejs AIA FTP Deploy Complete: ${{ github.event.issue.title }}
