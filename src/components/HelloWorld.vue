@@ -32,8 +32,20 @@
         <div class="screenCover hidden" id="screenCover" @click="closePopupChangeCommit()"></div>
 
         <div class="getAppBanner">
-            <img src="@/assets/img/getApp.png" style="width: 100%"/>
             <a href="https://www.luandinh.com/download/SSContract.apk" style="position: absolute; left: 0; right: 0; top: 53px; margin: auto; width: 148px; border-radius: 14px; height: 50px;" target="_blank"></a>
+        </div>
+        <div style="background-color: #fff; max-width: 640px; margin: auto; position: relative;">
+            <carousel :perPage="1" :navigationEnabled="true" :paginationSize="5" :paginationPadding="5">
+                <slide>
+                    <img src="@/assets/img/getApp.png" style="width: 100%" />
+                </slide>
+                <slide>
+                    <img src="@/assets/img/getApp.png" style="width: 100%" />
+                </slide>
+                <slide>
+                    <img src="@/assets/img/getApp.png" style="width: 100%" />
+                </slide>
+            </carousel>
         </div>
         <section class="popupCommit hidden" id="popupCommit">
             <div>
@@ -56,7 +68,7 @@
 <script>
     import { RepositoryFactory } from '@/repositories/RepositoryFactory'
     const CommitRepository = RepositoryFactory.get('commit')
-
+    import { Carousel, Slide } from 'vue-carousel';
     import MonthPicker from './month-picker-ez/month-picker-ez.vue'
     import { CurrencyInput, parseCurrency } from 'vue-currency-input'
     import loading from '@/components/shared/loading.vue'
@@ -71,7 +83,12 @@
                 crrRemain: 0,
                 currency: "VND",
                 locale: "vi-VN",
-                isShowLoading: false
+                isShowLoading: false,
+                //dataLst: [
+                //    '<div class="example-slide">Slide 1</div>',
+                //    '<div class="example-slide">Slide 2</div>',
+                //    '<div class="example-slide">Slide 3</div>',
+                //],
             }
         },
         computed: {
@@ -174,7 +191,9 @@
         components: {
             MonthPicker,
             CurrencyInput,
-            loading
+            loading,
+            Carousel,
+            Slide,
         }
     };
 </script>
@@ -370,4 +389,14 @@
         .screenCover.hidden {
             display: none;
         }
+
+    .example-slide {
+        align-items: center;
+        background-color: #666;
+        color: #999;
+        display: flex;
+        font-size: 1.5rem;
+        justify-content: center;
+        min-height: 10rem;
+    }
 </style>
